@@ -27,9 +27,6 @@ namespace FourthTask
                              + Math.Pow(destination.Z - startingPosition.Z, 2));
         }
 
-        public override string ToString()
-        {
-            return $"X: {X}\nY: {Y}\nZ: {Z}\n";
-        }
+        public override string ToString() => $"X: {X}\nY: {Y}\nZ: {Z}\n";
     }
 }
