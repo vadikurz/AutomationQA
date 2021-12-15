@@ -14,5 +14,7 @@
             SerialNumber = serialNumber;
             PermissibleLoad = permissibleLoad;
         }
+        public override string ToString() => $"{NumberOfWheels}\n{SerialNumber}\n{PermissibleLoad}\n";
+
     }
 }
