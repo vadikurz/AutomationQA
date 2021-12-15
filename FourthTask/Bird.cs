@@ -6,20 +6,20 @@ namespace FourthTask
     public class Bird : IFlyable
     {
         public const int MaxDistance = 100;
-        public const int MinSpeed = 1;
+        public const int MinSpeed = 0;
         public const int MaxSpeed = 20;
         public Point CurrentPoint { get; private set; }
         public int Speed { get; }
-        public Bird(Point currentPoint, int speed)
+        public Bird(Point currentPoint)
         {
-            if (speed > MaxSpeed || speed < MinSpeed)
-            {
-                throw new ArgumentOutOfRangeException("The bird's speed can be from 1 to 20 kilometers per hour");
-            }
             CurrentPoint = currentPoint;
-            Speed = speed;
+            Speed = RandomSpeed();
         }
-
+        private int RandomSpeed()
+        { 
+            Random rnd = new Random();
+            return rnd.Next(MinSpeed, MaxSpeed);
+        }
         public void FlyTo(Point destinationPoint)
         {
             double distance = CurrentPoint.GetDistance(CurrentPoint, destinationPoint);
@@ -27,17 +27,31 @@ namespace FourthTask
             {
                 throw new ArgumentOutOfRangeException("The Bird cannot fly more than 100 kilometers");
             }
+
+            if (!PossibilityToFly())
+            {
+                throw new ArgumentException("The Bird Speed is 0 km/h");
+            }
             CurrentPoint = destinationPoint;
         }
 
         public double GetFlyTime(Point destinationPoint)
         {
+            if (!PossibilityToFly())
+            {
+                throw new ArgumentException("The Bird Speed is 0 km/h");
+            }
             double distance = CurrentPoint.GetDistance(CurrentPoint, destinationPoint);
             if (distance > MaxDistance)
             {
                 throw new ArgumentOutOfRangeException("The Bird cannot fly more than 100 kilometers");
             }
             return CurrentPoint.GetDistance(CurrentPoint, destinationPoint) / Speed;
+        }
+
+        private bool PossibilityToFly()
+        {
+            return Speed != 0;
         }
 
     }
