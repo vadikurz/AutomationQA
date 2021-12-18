@@ -14,5 +14,7 @@
             Transmission = transmission;
             Chassis = chassis;
         }
+
+        public override string ToString() => $"{Engine}\n{Transmission}\n{Chassis}\n";
     }
 }
