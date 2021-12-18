@@ -3,18 +3,20 @@ using SecondTask;
 
 namespace SecondTaskTests
 {
-    public record TestCase(string NumberToConvert, int Base, int ConverationResult);
 
     [TestClass]
     public class NumberConverterTests
     {
 
         [TestMethod]
-        [DataRow(new TestCase("-10011", 2, -19))]
-        public void TestConvertPositive()
+        [DataRow("-10011", -19, 2)]
+        public void TestConvertPositive(string expected, int number, int toBase)
         {
             var converter = new NumberConverter();
-            Assert.AreEqual("-10011", converter.Convert(-19,2));
+
+            string convertedNumber = converter.Convert(number, toBase);
+
+            Assert.AreEqual(expected, convertedNumber);
         }
     }
 }
