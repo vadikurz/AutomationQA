@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Net.Http.Headers;
 
 namespace FourthTask
 {
@@ -9,7 +10,21 @@ namespace FourthTask
         public const int MinSpeed = 0;
         public const int MaxSpeed = 20;
         public Point CurrentPoint { get; private set; }
-        public int Speed { get; }
+
+        private int speed;
+        public int Speed
+        {
+            get => speed;
+            set
+            {
+                if (value < MinSpeed || value > MaxSpeed)
+                {
+                    throw new ArgumentOutOfRangeException("The bird speed must be between 0 and 20 km/h");
+                }
+                speed = value;
+            }
+        }
+
         public Bird(Point currentPoint)
         {
             CurrentPoint = currentPoint;
