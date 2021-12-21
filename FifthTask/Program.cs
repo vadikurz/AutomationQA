@@ -1,18 +1,47 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Xml.Serialization;
+using System.Reflection.Metadata.Ecma335;
 
 namespace FifthTask
 {
-    class Program
+
+
+    public class Program
     {
+        public static IEnumerable<ViewSerializer<ICollection<Vehicle>>> CreateViewSerializer() 
+            => new ViewSerializer<ICollection<Vehicle>>[]
+            {
+                new()
+                {
+                    Path = "vehicle_volume_more_than1,5.xml",
+                    View = vs => vs
+                        .Where(v => v.Engine.Capacity > 1.5)
+                        .ToList()
+                },
+
+                new()
+                {
+                    Path = "only_bus_and_truck_engine_information.xml",
+                    View = vs => vs.Where(v => v is Truck or Bus)
+                        .Select(vehicle => vehicle.Engine)
+                        .Select(engine => (EngineType: engine.Type, SerialNumber: engine.SerialNumber,
+                            Power: engine.Power))
+                        .ToList()
+                },
+
+                new()
+                {
+                    Path = "all_information_grouped_by_transmissiontype.xml",
+                    View = vs => vs.OrderBy(v => v.Transmission.Type).ToList()
+                }
+            };
+
         static void Main(string[] args)
         {
             try
             {
-                
+
                 var car = new Car(new Engine(300, 3, EngineType.Diesel, "1234567v"),
                     new Transmission(TransmissionType.Automatic, 7, "Aisin"),
                     new Chassis(4, "12345v2", 1000), CarBody.StationWagon);
@@ -28,21 +57,14 @@ namespace FifthTask
                 var truck = new Truck(new Engine(200, 3, EngineType.Electric, "dr3407tye"),
                     new Transmission(TransmissionType.Automatic, 8, "ZF"),
                     new Chassis(4, "456308ht95", 2500), 5);
-                
+
                 List<Vehicle> vehicles = new List<Vehicle>() { car, bus, scooter, truck };
 
-                XmlSerializer serializer = new XmlSerializer(typeof(List<Vehicle>));
-                using FileStream firstFileStream = new FileStream("vehicle_volume_more_than1,5.xml", FileMode.OpenOrCreate);
-                serializer.Serialize(firstFileStream, vehicles.Where(vehicle => vehicle.Engine.Capacity > 1.5).ToList());
-
-                serializer = new XmlSerializer(typeof(List<(EngineType, string, int)>));
-                using FileStream secondFileStream = new FileStream("only_bus_and_truck_engine_information.xml", FileMode.OpenOrCreate);
-                serializer.Serialize(secondFileStream, vehicles.Where(vehicle => (vehicle is Truck) || (vehicle is Bus))
-                    .Select(vehicle => vehicle.Engine).Select(engine => (EngineType: engine.Type, SerialNumber: engine.SerialNumber, Power: engine.Power)).ToList());
-
-                serializer = new XmlSerializer(typeof(List<Vehicle>));
-                using FileStream ThirdFileStream = new FileStream("all_information_grouped_by_transmissiontype.xml", FileMode.OpenOrCreate);
-                serializer.Serialize(ThirdFileStream, vehicles.OrderBy(vehicle => vehicle.Transmission.Type).ToList());
+                var viewSerializers = CreateViewSerializer();
+                foreach (var decorator in viewSerializers)
+                {
+                    decorator.Execute(vehicles);
+                }
 
             }
             catch (Exception ex)
