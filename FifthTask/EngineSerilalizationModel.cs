@@ -3,7 +3,7 @@
 namespace FifthTask
 {
     [Serializable]
-    public class EngineSerilalizationModel
+    public class EngineSerializationModel
     {
         public int Power { get; set; }
 
@@ -11,8 +11,8 @@ namespace FifthTask
 
         public string SerialNumber { get; set; }
 
-        public EngineSerilalizationModel() { }
-        public EngineSerilalizationModel(int power, EngineType type, string serialNumber)
+        public EngineSerializationModel() { }
+        public EngineSerializationModel(int power, EngineType type, string serialNumber)
         {
             Power = power;
             Type = type;
