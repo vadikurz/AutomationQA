@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 
 namespace FifthTask
 {
-
-
     public class Program
     {
-        public static IEnumerable<ViewSerializer<ICollection<Vehicle>>> CreateViewSerializer() 
+        public static IEnumerable<ViewSerializer<ICollection<Vehicle>>> CreateViewSerializer()
             => new ViewSerializer<ICollection<Vehicle>>[]
             {
                 new()
