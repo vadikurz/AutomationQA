@@ -22,7 +22,7 @@ namespace FifthTask
                     Path = "only_bus_and_truck_engine_information.xml",
                     View = vs => vs.Where(v => v is Truck or Bus)
                         .Select(vehicle => vehicle.Engine)
-                        .Select(engine => new EngineSerilalizationModel(engine.Power, engine.Type, engine.SerialNumber))
+                        .Select(engine => new EngineSerializationModel(engine.Power, engine.Type, engine.SerialNumber))
                         .ToList()
                 },
 
