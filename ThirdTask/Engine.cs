@@ -4,13 +4,13 @@
     {
         public int Power { get; set; }
 
-        public int Volume { get; set; }
+        public double Volume { get; set; }
 
         public EngineType Type { get; set; }
 
         public string SerialNumber { get; set; }
 
-        public Engine(int power, int volume, EngineType type, string serialNumber)
+        public Engine(int power, double volume, EngineType type, string serialNumber)
         {
             Power = power;
             Volume = volume;
