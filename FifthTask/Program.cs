@@ -22,15 +22,16 @@ namespace FifthTask
                     Path = "only_bus_and_truck_engine_information.xml",
                     View = vs => vs.Where(v => v is Truck or Bus)
                         .Select(vehicle => vehicle.Engine)
-                        .Select(engine => (EngineType: engine.Type, SerialNumber: engine.SerialNumber,
-                            Power: engine.Power))
+                        .Select(engine => new EngineSerilalizationModel(engine.Power, engine.Type, engine.SerialNumber))
                         .ToList()
                 },
 
                 new()
                 {
                     Path = "all_information_grouped_by_transmissiontype.xml",
-                    View = vs => vs.OrderBy(v => v.Transmission.Type).ToList()
+                    View = vs => vs.GroupBy(v => v.Transmission.Type)
+                        .Select(group => group.ToSerializationModel()).ToList()
+
                 }
             };
 
