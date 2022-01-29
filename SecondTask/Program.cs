@@ -1,7 +1,5 @@
 ﻿using System;
 
-
-
 namespace SecondTask
 {
     class Program
@@ -23,8 +21,6 @@ namespace SecondTask
             {
                 Console.WriteLine(e);
             }
-            
-
         }
     }
 }

@@ -3,11 +3,9 @@ using SecondTask;
 
 namespace SecondTaskTests
 {
-
     [TestClass]
     public class NumberConverterTests
     {
-
         [TestMethod]
         [DataRow("-10011", -19, 2)]
         public void TestConvertPositive(string expected, int number, int toBase)
