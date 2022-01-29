@@ -1,5 +1,4 @@
-﻿
-namespace FourthTask
+﻿namespace FourthTask
 {
     public interface IFlyable
     {
