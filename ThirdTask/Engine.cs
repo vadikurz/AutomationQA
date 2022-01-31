@@ -2,13 +2,13 @@
 {
     public class Engine
     {
-        public int Power { get; set; }
+        public int Power { get; }
 
-        public double Volume { get; set; }
+        public double Volume { get; }
 
-        public EngineType Type { get; set; }
+        public EngineType Type { get; }
 
-        public string SerialNumber { get; set; }
+        public string SerialNumber { get; }
 
         public Engine(int power, double volume, EngineType type, string serialNumber)
         {
