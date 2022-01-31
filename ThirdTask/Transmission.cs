@@ -3,9 +3,7 @@
     public class Transmission
     {
         public TransmissionType Type { get; }
-
         public ushort NumberOfGears { get; }
-
         public string Manufacturer { get; }
 
         public Transmission(TransmissionType type, ushort numberOfGears, string manufacturer)
