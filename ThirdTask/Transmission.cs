@@ -2,11 +2,11 @@
 {
     public class Transmission
     {
-        public TransmissionType Type { get; set; }
+        public TransmissionType Type { get; }
 
-        public ushort NumberOfGears { get; set; }
+        public ushort NumberOfGears { get; }
 
-        public string Manufacturer { get; set; }
+        public string Manufacturer { get; }
 
         public Transmission(TransmissionType type, ushort numberOfGears, string manufacturer)
         {
