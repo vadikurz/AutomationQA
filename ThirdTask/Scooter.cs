@@ -8,9 +8,9 @@ namespace ThirdTask
 
         public Scooter(Engine engine, Transmission transmission, Chassis chassis, ushort maxSpeed) : base(engine, transmission, chassis)
         {
-            if (chassis.NumberOfWheels < 2 || chassis.NumberOfWheels > 3)
+            if (chassis.NumberOfWheels is < 2 or > 3)
             {
-                throw new ArgumentOutOfRangeException("The number of wheels on the scooter can be from 2 before 3");
+                throw new ArgumentOutOfRangeException(nameof(chassis),"The number of wheels of chassis on the scooter can be from 2 before 3");
             }
             MaxSpeed = maxSpeed;
         }
