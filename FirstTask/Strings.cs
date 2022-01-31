@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace FirstTask
 {
@@ -10,9 +11,14 @@ namespace FirstTask
         /// </summary>
         /// <param name="str" ></param>
         /// <returns> maximum count of unique sequential characters. </returns>
+        /// <exception cref="ArgumentNullException"> if str is null</exception>
         public static int MaxCountOfUniqueSequentialCharacters(this string str)
         {
-            int max = -1;
+            if (str is null)
+            {
+                throw new ArgumentNullException(str);
+            }
+            int max = 0;
             for (int i = 0; i < str.Length; i++)
             {
                 HashSet<char> items = new HashSet<char> { str[i] };
