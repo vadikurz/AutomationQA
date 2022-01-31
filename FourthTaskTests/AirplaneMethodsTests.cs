@@ -6,6 +6,7 @@ namespace FourthTaskTests
     [TestClass]
     public class AirplaneMethodsTests
     {
+        public const double Delta = 1e-6;
         [TestMethod]
         [DataRow(0.7510423123, new[] { 15, 2, 3 }, new[] { 100, 200, 38 })]
         public void GetFlyTimeTestPositive(double expectedTime, int[] currentPoint, int[] destinationPoint)
@@ -14,7 +15,7 @@ namespace FourthTaskTests
 
             double actualTime = airplane.GetFlyTime(new Point(destinationPoint[0], destinationPoint[1], destinationPoint[2]));
 
-            Assert.AreEqual(expectedTime, actualTime, 0.000001);
+            Assert.AreEqual(expectedTime, actualTime, Delta);
         }
     }
 }
