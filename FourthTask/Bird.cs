@@ -15,7 +15,7 @@ namespace FourthTask
             get => speed;
             set
             {
-                if (value < MinSpeed || value > MaxSpeed)
+                if (value is < MinSpeed or > MaxSpeed)
                 {
                     throw new ArgumentOutOfRangeException(null,"The bird speed must be between 0 and 20 km/h");
                 }
