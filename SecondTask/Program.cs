@@ -11,7 +11,7 @@ namespace SecondTask
                 if (args.Length == 2)
                 {
                     var converter = new NumberConverter();
-                    if (int.TryParse(args[0], out var number) && int.TryParse(args[0], out var @base))
+                    if (int.TryParse(args[0], out var number) && int.TryParse(args[1], out var @base))
                     {
                         Console.WriteLine(converter.Convert(number, @base));
                     }
