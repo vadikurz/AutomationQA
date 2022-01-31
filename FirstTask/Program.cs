@@ -6,9 +6,16 @@ namespace FirstTask
     {
         public static void Main(string[] args)
         {
-            if (args.Length == 1)
+            try
             {
-                Console.WriteLine(args[0].MaxCountOfUniqueSequentialCharacters());
+                if (args.Length == 1)
+                {
+                    Console.WriteLine(args[0].MaxCountOfUniqueSequentialCharacters());
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
             }
         }
     }
