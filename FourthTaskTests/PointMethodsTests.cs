@@ -13,7 +13,7 @@ namespace FourthTaskTests
             var startPoint = new Point(startingPoint[0], startingPoint[1], startingPoint[2]);
             var destinationPoint = new Point(destination[0], destination[1], destination[2]);
 
-            double actualDistance = startPoint.GetDistance(startPoint, destinationPoint);
+            double actualDistance = startPoint.GetDistance(destinationPoint);
 
             Assert.AreEqual(expectedDistance, actualDistance, eps);
         }
