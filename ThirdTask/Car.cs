@@ -14,6 +14,6 @@ namespace ThirdTask
             BodyType = bodyType;
         }
 
-        public override string ToString() => $"{base.ToString()}\n{BodyType}\n";
+        public override string ToString() => $"Car:\n{base.ToString()}Body type: {BodyType}\n";
     }
 }

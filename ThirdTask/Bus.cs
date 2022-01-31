@@ -14,6 +14,6 @@ namespace ThirdTask
             }
             NumberOfSeats = numberOfSeats;
         }
-        public override string ToString() => $"{base.ToString()}\n{NumberOfSeats}\n";
+        public override string ToString() => $"Bus:\n{base.ToString()}Number of seats: {NumberOfSeats}\n";
     }
 }
