@@ -35,7 +35,7 @@ namespace FourthTask
         }
         public void FlyTo(Point destinationPoint)
         {
-            double distance = CurrentPoint.GetDistance(CurrentPoint, destinationPoint);
+            double distance = CurrentPoint.GetDistance(destinationPoint);
             if (distance > MaxDistance)
             {
                 throw new ArgumentOutOfRangeException(nameof(distance), "The Bird cannot fly more than 100 kilometers");
@@ -54,12 +54,12 @@ namespace FourthTask
             {
                 throw new ArgumentException("The Bird Speed is 0 km/h");
             }
-            double distance = CurrentPoint.GetDistance(CurrentPoint, destinationPoint);
+            double distance = CurrentPoint.GetDistance(destinationPoint);
             if (distance > MaxDistance)
             {
                 throw new ArgumentOutOfRangeException(nameof(distance), "The Bird cannot fly more than 100 kilometers");
             }
-            return CurrentPoint.GetDistance(CurrentPoint, destinationPoint) / Speed;
+            return CurrentPoint.GetDistance(destinationPoint) / Speed;
         }
 
         private bool PossibilityToFly()

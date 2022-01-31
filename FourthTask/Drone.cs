@@ -23,7 +23,7 @@ namespace FourthTask
 
         public void FlyTo(Point destinationPoint)
         {
-            double distance = CurrentPoint.GetDistance(CurrentPoint, destinationPoint);
+            double distance = CurrentPoint.GetDistance(destinationPoint);
             if (distance > MaxDistance)
             {
                 throw new ArgumentOutOfRangeException(nameof(distance), "The drone cannot fly more than 1000 kilometers");
@@ -33,7 +33,7 @@ namespace FourthTask
 
         public double GetFlyTime(Point destinationPoint)
         {
-            double distance = CurrentPoint.GetDistance(CurrentPoint, destinationPoint);
+            double distance = CurrentPoint.GetDistance(destinationPoint);
             if (distance > MaxDistance)
             {
                 throw new ArgumentOutOfRangeException(nameof(distance), "The drone cannot fly more than 1000 kilometers");
