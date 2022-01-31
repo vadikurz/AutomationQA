@@ -9,7 +9,7 @@ namespace ThirdTask
         {
             if (chassis.NumberOfWheels < 4)
             {
-                throw new ArgumentOutOfRangeException("A car cannot have less than 4 wheels.");
+                throw new ArgumentOutOfRangeException(nameof(chassis), "A car cannot have less than 4 wheels of chassis.");
             }
             BodyType = bodyType;
         }
