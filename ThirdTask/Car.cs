@@ -5,6 +5,7 @@ namespace ThirdTask
     public class Car : Vehicle
     {
         public CarBody BodyType { get; }
+
         public Car(Engine engine, Transmission transmission, Chassis chassis, CarBody bodyType) : base(engine, transmission, chassis)
         {
             if (chassis.NumberOfWheels < 4)
