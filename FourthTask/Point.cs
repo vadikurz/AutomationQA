@@ -26,11 +26,9 @@ namespace FourthTask
             Y = y;
             Z = z;
         }
-        public double GetDistance(Point startingPosition, Point destination)
+        public double GetDistance(Point destination)
         {
-            return Math.Sqrt(Math.Pow(destination.X - startingPosition.X, 2)
-                             + Math.Pow(destination.Y - startingPosition.Y, 2)
-                             + Math.Pow(destination.Z - startingPosition.Z, 2));
+            return Math.Sqrt(Math.Pow(destination.X - X, 2) + Math.Pow(destination.Y - Y, 2) + Math.Pow(destination.Z - Z, 2));
         }
 
         public override string ToString() => $"X: {X}\nY: {Y}\nZ: {Z}\n";
