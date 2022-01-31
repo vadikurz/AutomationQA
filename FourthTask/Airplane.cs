@@ -19,7 +19,7 @@ namespace FourthTask
             double distance = CurrentPoint.GetDistance(CurrentPoint, destinationPoint);
             if (distance > MaxDistance)
             {
-                throw new ArgumentOutOfRangeException("The Airplane cannot fly more than 6000 kilometers");
+                throw new ArgumentOutOfRangeException(nameof(distance),"The Airplane cannot fly more than 6000 kilometers");
             }
             CurrentPoint = destinationPoint;
         }
@@ -29,7 +29,7 @@ namespace FourthTask
             double distance = CurrentPoint.GetDistance(CurrentPoint, destinationPoint);
             if (distance > MaxDistance)
             {
-                throw new ArgumentOutOfRangeException("The airplane cannot fly more than 6000 kilometers");
+                throw new ArgumentOutOfRangeException(nameof(distance),"The airplane cannot fly more than 6000 kilometers");
             }
             int numberOfSpeedIncreases = (int)(distance / 10);
             int airplaneSpeed = StartingSpeed;

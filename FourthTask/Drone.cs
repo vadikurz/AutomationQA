@@ -15,7 +15,7 @@ namespace FourthTask
         {
             if (speed > MaxSpeed || speed < MinSpeed)
             {
-                throw new ArgumentOutOfRangeException("The maximum speed of the drone is 260 kilometers per hour");
+                throw new ArgumentOutOfRangeException(nameof(speed),"The maximum speed of the drone is 260 kilometers per hour");
             }
             CurrentPoint = currentPoint;
             Speed = speed;
@@ -26,7 +26,7 @@ namespace FourthTask
             double distance = CurrentPoint.GetDistance(CurrentPoint, destinationPoint);
             if (distance > MaxDistance)
             {
-                throw new ArgumentOutOfRangeException("The drone cannot fly more than 1000 kilometers");
+                throw new ArgumentOutOfRangeException(nameof(distance), "The drone cannot fly more than 1000 kilometers");
             }
             CurrentPoint = destinationPoint;
         }
@@ -36,7 +36,7 @@ namespace FourthTask
             double distance = CurrentPoint.GetDistance(CurrentPoint, destinationPoint);
             if (distance > MaxDistance)
             {
-                throw new ArgumentOutOfRangeException("The drone cannot fly more than 1000 kilometers");
+                throw new ArgumentOutOfRangeException(nameof(distance), "The drone cannot fly more than 1000 kilometers");
             }
             return (distance / Speed) + (int)((distance / Speed) / 10);
         }

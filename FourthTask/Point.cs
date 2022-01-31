@@ -10,9 +10,17 @@ namespace FourthTask
 
         public Point(int x, int y, int z)
         {
-            if (x < 0 || y < 0 || z < 0)
+            if (x < 0)
             {
-                throw new ArgumentOutOfRangeException("Coordinates cannot be negative");
+                throw new ArgumentOutOfRangeException(nameof(x),"Coordinates cannot be negative");
+            }
+            if (y < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(y), "Coordinates cannot be negative");
+            }
+            if (z < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(z), "Coordinates cannot be negative");
             }
             X = x;
             Y = y;

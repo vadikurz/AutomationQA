@@ -17,7 +17,7 @@ namespace FourthTask
             {
                 if (value < MinSpeed || value > MaxSpeed)
                 {
-                    throw new ArgumentOutOfRangeException("The bird speed must be between 0 and 20 km/h");
+                    throw new ArgumentOutOfRangeException(null,"The bird speed must be between 0 and 20 km/h");
                 }
                 speed = value;
             }
@@ -38,7 +38,7 @@ namespace FourthTask
             double distance = CurrentPoint.GetDistance(CurrentPoint, destinationPoint);
             if (distance > MaxDistance)
             {
-                throw new ArgumentOutOfRangeException("The Bird cannot fly more than 100 kilometers");
+                throw new ArgumentOutOfRangeException(nameof(distance), "The Bird cannot fly more than 100 kilometers");
             }
 
             if (!PossibilityToFly())
@@ -57,7 +57,7 @@ namespace FourthTask
             double distance = CurrentPoint.GetDistance(CurrentPoint, destinationPoint);
             if (distance > MaxDistance)
             {
-                throw new ArgumentOutOfRangeException("The Bird cannot fly more than 100 kilometers");
+                throw new ArgumentOutOfRangeException(nameof(distance), "The Bird cannot fly more than 100 kilometers");
             }
             return CurrentPoint.GetDistance(CurrentPoint, destinationPoint) / Speed;
         }
