@@ -18,6 +18,6 @@
             SerialNumber = serialNumber;
         }
 
-        public override string ToString() => $"{Power}\n{Volume}\n{Type}\n{SerialNumber}\n";
+        public override string ToString() => $"Power: {Power}\nVolume: {Volume}\nType: {Type}\nSerial number: {SerialNumber}";
     }
 }

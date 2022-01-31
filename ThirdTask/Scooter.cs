@@ -14,6 +14,6 @@ namespace ThirdTask
             }
             MaxSpeed = maxSpeed;
         }
-        public override string ToString() => $"{base.ToString()}\n{MaxSpeed}\n";
+        public override string ToString() => $"Scooter:\n{base.ToString()}Max speed: {MaxSpeed}\n";
     }
 }

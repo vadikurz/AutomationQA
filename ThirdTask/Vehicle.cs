@@ -1,4 +1,6 @@
-﻿namespace ThirdTask
+﻿using System;
+
+namespace ThirdTask
 {
     public abstract class Vehicle
     {
@@ -15,6 +17,6 @@
             Chassis = chassis;
         }
 
-        public override string ToString() => $"{Engine}\n{Transmission}\n{Chassis}\n";
+        public override string ToString() => $"Engine:\n{Engine}\nTransmission:\n{Transmission}\nChassis:\n{Chassis}\n";
     }
 }

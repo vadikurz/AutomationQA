@@ -13,6 +13,6 @@ namespace ThirdTask
             }
             LiftingCapacity = liftingCapacity;
         }
-        public override string ToString() => $"{base.ToString()}\n{LiftingCapacity}\n";
+        public override string ToString() => $"Truck:\n{base.ToString()}Lifting capacity: {LiftingCapacity}\n";
     }
 }
