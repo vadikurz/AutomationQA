@@ -10,7 +10,7 @@ namespace ThirdTask
         {
             if (chassis.NumberOfWheels < 4)
             {
-                throw new ArgumentOutOfRangeException("A bus cannot have less than 4 wheels.");
+                throw new ArgumentOutOfRangeException(nameof(chassis),"A bus cannot have less than 4 wheels of chassis.");
             }
             NumberOfSeats = numberOfSeats;
         }

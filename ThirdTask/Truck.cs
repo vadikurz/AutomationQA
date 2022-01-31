@@ -9,7 +9,7 @@ namespace ThirdTask
         {
             if (chassis.NumberOfWheels < 4)
             {
-                throw new ArgumentOutOfRangeException("A truck cannot have less than 4 wheels.");
+                throw new ArgumentOutOfRangeException(nameof(chassis), "A truck cannot have less than 4 wheels of chassis.");
             }
             LiftingCapacity = liftingCapacity;
         }
