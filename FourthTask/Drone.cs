@@ -13,7 +13,7 @@ namespace FourthTask
 
         public Drone(Point currentPoint, int speed)
         {
-            if (speed > MaxSpeed || speed < MinSpeed)
+            if (speed is > MaxSpeed or < MinSpeed)
             {
                 throw new ArgumentOutOfRangeException(nameof(speed),"The maximum speed of the drone is 260 kilometers per hour");
             }
