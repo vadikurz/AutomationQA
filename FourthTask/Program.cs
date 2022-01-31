@@ -11,21 +11,22 @@ namespace FourthTask
             {
                 var point = new Point(15, 2, 3);
 
-                var Flyable = new List<IFlyable>();
+                var flyables = new List<IFlyable>
+                {
+                    new Bird(point),
+                    new Airplane(point),
+                    new Drone(point, 50)
+                };
 
-                Flyable.Add(new Bird(point));
-                Flyable.Add(new Airplane(point));
-                Flyable.Add(new Drone(point, 50));
-
-                foreach (var flyable in Flyable)
+                foreach (var flyable in flyables)
                 {
                     flyable.FlyTo(new Point(75, 68, 45));
                     flyable.GetFlyTime(new Point(123, 150, 75));
                 }
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(exception.Message);
             }
         }
     }
