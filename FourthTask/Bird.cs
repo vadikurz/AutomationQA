@@ -30,8 +30,8 @@ namespace FourthTask
         }
         private int RandomSpeed()
         { 
-            Random rnd = new Random();
-            return rnd.Next(MinSpeed, MaxSpeed);
+            Random random = new Random();
+            return random.Next(MinSpeed, MaxSpeed);
         }
         public void FlyTo(Point destinationPoint)
         {
@@ -41,7 +41,7 @@ namespace FourthTask
                 throw new ArgumentOutOfRangeException(nameof(distance), "The Bird cannot fly more than 100 kilometers");
             }
 
-            if (!PossibilityToFly())
+            if (!IsPossibleToFly())
             {
                 throw new ArgumentException("The Bird Speed is 0 km/h");
             }
@@ -50,7 +50,7 @@ namespace FourthTask
 
         public double GetFlyTime(Point destinationPoint)
         {
-            if (!PossibilityToFly())
+            if (!IsPossibleToFly())
             {
                 throw new ArgumentException("The Bird Speed is 0 km/h");
             }
@@ -62,7 +62,7 @@ namespace FourthTask
             return CurrentPoint.GetDistance(destinationPoint) / Speed;
         }
 
-        private bool PossibilityToFly()
+        private bool IsPossibleToFly()
         {
             return Speed != 0;
         }
