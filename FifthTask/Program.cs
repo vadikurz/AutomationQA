@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FifthTask.Extensions;
+using FifthTask.Parts;
+using FifthTask.Serialization;
+using FifthTask.Vehicles;
 
 namespace FifthTask
 {

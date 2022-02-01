@@ -1,6 +1,7 @@
 ﻿using System.Linq;
+using FifthTask.Serialization;
 
-namespace FifthTask
+namespace FifthTask.Extensions
 {
     public static class Groupings
     {
