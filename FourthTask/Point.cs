@@ -4,6 +4,7 @@ namespace FourthTask
 {
     public class Point
     {
+        private const string CoordinateValidationExceptionMessage = "Coordinates cannot be negative";
         public int X { get; }
         public int Y { get; }
         public int Z { get; }
@@ -12,15 +13,15 @@ namespace FourthTask
         {
             if (x < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(x),"Coordinates cannot be negative");
+                throw new ArgumentOutOfRangeException(nameof(x), CoordinateValidationExceptionMessage);
             }
             if (y < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(y), "Coordinates cannot be negative");
+                throw new ArgumentOutOfRangeException(nameof(y), CoordinateValidationExceptionMessage);
             }
             if (z < 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(z), "Coordinates cannot be negative");
+                throw new ArgumentOutOfRangeException(nameof(z), CoordinateValidationExceptionMessage);
             }
             X = x;
             Y = y;

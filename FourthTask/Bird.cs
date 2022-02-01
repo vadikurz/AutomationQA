@@ -4,6 +4,8 @@ namespace FourthTask
 {
     public class Bird : IFlyable
     {
+        private const string SpeedValidationExceptionMessage = "The Bird Speed is 0 km/h";
+        private const string DistanceValidationExceptionMessage = "The Bird cannot fly more than 100 kilometers";
         public const int MaxDistance = 100;
         public const int MinSpeed = 0;
         public const int MaxSpeed = 20;
@@ -38,12 +40,12 @@ namespace FourthTask
             double distance = CurrentPoint.GetDistance(destinationPoint);
             if (distance > MaxDistance)
             {
-                throw new ArgumentOutOfRangeException(nameof(distance), "The Bird cannot fly more than 100 kilometers");
+                throw new ArgumentOutOfRangeException(nameof(distance), DistanceValidationExceptionMessage);
             }
 
             if (!IsPossibleToFly())
             {
-                throw new InvalidOperationException("The Bird Speed is 0 km/h");
+                throw new InvalidOperationException(SpeedValidationExceptionMessage);
             }
             CurrentPoint = destinationPoint;
         }
@@ -52,12 +54,12 @@ namespace FourthTask
         {
             if (!IsPossibleToFly())
             {
-                throw new ArgumentException("The Bird Speed is 0 km/h");
+                throw new ArgumentException(SpeedValidationExceptionMessage);
             }
             double distance = CurrentPoint.GetDistance(destinationPoint);
             if (distance > MaxDistance)
             {
-                throw new ArgumentOutOfRangeException(nameof(distance), "The Bird cannot fly more than 100 kilometers");
+                throw new ArgumentOutOfRangeException(nameof(distance), DistanceValidationExceptionMessage);
             }
             return CurrentPoint.GetDistance(destinationPoint) / Speed;
         }

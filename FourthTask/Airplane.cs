@@ -4,6 +4,7 @@ namespace FourthTask
 {
     public class Airplane : IFlyable
     {
+        private const string DistanceValidationExceptionMessage = "The Airplane cannot fly more than 6000 kilometers";
         public const int StartingSpeed = 200;
         public const int MaxSpeed = 900;
         public const int MaxDistance = 6000;
@@ -19,7 +20,7 @@ namespace FourthTask
             double distance = CurrentPoint.GetDistance(destinationPoint);
             if (distance > MaxDistance)
             {
-                throw new ArgumentOutOfRangeException(nameof(distance),"The Airplane cannot fly more than 6000 kilometers");
+                throw new ArgumentOutOfRangeException(nameof(distance), DistanceValidationExceptionMessage);
             }
             CurrentPoint = destinationPoint;
         }
@@ -29,7 +30,7 @@ namespace FourthTask
             double distance = CurrentPoint.GetDistance(destinationPoint);
             if (distance > MaxDistance)
             {
-                throw new ArgumentOutOfRangeException(nameof(distance),"The airplane cannot fly more than 6000 kilometers");
+                throw new ArgumentOutOfRangeException(nameof(distance),DistanceValidationExceptionMessage);
             }
             int numberOfSpeedIncreases = (int)(distance / 10);
             int airplaneSpeed = StartingSpeed;
@@ -43,6 +44,5 @@ namespace FourthTask
             }
             return time + distance / airplaneSpeed;
         }
-
     }
 }

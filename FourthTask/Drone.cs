@@ -4,6 +4,8 @@ namespace FourthTask
 {
     public class Drone : IFlyable
     {
+        private const string SpeedValidationExceptionMessage = "The maximum speed of the drone is 260 kilometers per hour";
+        private const string DistanceValidationExceptionMessage = "The drone cannot fly more than 1000 kilometers";
         public const int MaxDistance = 1000;
         public const int MinSpeed = 1;
         public const int MaxSpeed = 260;
@@ -15,7 +17,7 @@ namespace FourthTask
         {
             if (speed is > MaxSpeed or < MinSpeed)
             {
-                throw new ArgumentOutOfRangeException(nameof(speed),"The maximum speed of the drone is 260 kilometers per hour");
+                throw new ArgumentOutOfRangeException(nameof(speed), SpeedValidationExceptionMessage);
             }
             CurrentPoint = currentPoint;
             Speed = speed;
@@ -26,7 +28,7 @@ namespace FourthTask
             double distance = CurrentPoint.GetDistance(destinationPoint);
             if (distance > MaxDistance)
             {
-                throw new ArgumentOutOfRangeException(nameof(distance), "The drone cannot fly more than 1000 kilometers");
+                throw new ArgumentOutOfRangeException(nameof(distance), DistanceValidationExceptionMessage);
             }
             CurrentPoint = destinationPoint;
         }
@@ -36,7 +38,7 @@ namespace FourthTask
             double distance = CurrentPoint.GetDistance(destinationPoint);
             if (distance > MaxDistance)
             {
-                throw new ArgumentOutOfRangeException(nameof(distance), "The drone cannot fly more than 1000 kilometers");
+                throw new ArgumentOutOfRangeException(nameof(distance), DistanceValidationExceptionMessage);
             }
             return (distance / Speed) + (int)((distance / Speed) / 10);
         }
