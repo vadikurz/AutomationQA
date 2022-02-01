@@ -1,4 +1,4 @@
-﻿namespace ThirdTask
+﻿namespace ThirdTask.Parts
 {
     public enum CarBody
     {
