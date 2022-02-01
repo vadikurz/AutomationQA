@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 
-namespace FifthTask
+namespace FifthTask.Serialization
 {
     public class ViewSerializer<T>
     {

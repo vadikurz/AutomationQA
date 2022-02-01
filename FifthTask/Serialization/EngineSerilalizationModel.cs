@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FifthTask
+namespace FifthTask.Serialization
 {
     [Serializable]
     public class EngineSerializationModel

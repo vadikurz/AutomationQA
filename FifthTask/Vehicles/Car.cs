@@ -1,6 +1,7 @@
 ﻿using System;
+using FifthTask.Parts;
 
-namespace FifthTask
+namespace FifthTask.Vehicles
 {
     [Serializable]
     public class Car : Vehicle
