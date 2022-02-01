@@ -19,12 +19,12 @@ namespace SecondTask
             StringBuilder convertedNumber = new StringBuilder();
             while (absoluteValue > 0)
             {
-                convertedNumber = convertedNumber.Insert(0, Digits[absoluteValue % toBase].ToString());
+                convertedNumber.Insert(0, Digits[absoluteValue % toBase].ToString());
                 absoluteValue /= toBase;
             }
             if (number < 0)
             {
-                convertedNumber = convertedNumber.Insert(0, "-");
+                convertedNumber.Insert(0, "-");
             }
             return convertedNumber.ToString();
         }
