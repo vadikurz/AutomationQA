@@ -12,11 +12,11 @@ namespace FirstTaskTests
         [DataRow(0, "")]
         [DataRow(2, "aba")]
         [DataRow(1, "aa")]
-        public void GivenNormalStringShouldBePositive(int expected, string testString)
+        public void GivenNormalStringShouldBePositive(int expectedCount, string testString)
         {
-            int actualNumber = testString.MaxCountOfUniqueSequentialCharacters();
+            int actualCount = testString.MaxCountOfUniqueSequentialCharacters();
 
-            Assert.AreEqual(expected, actualNumber);
+            Assert.AreEqual(expectedCount, actualCount);
         }
 
         [TestMethod]
