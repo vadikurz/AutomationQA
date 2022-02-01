@@ -10,7 +10,7 @@ namespace FifthTask
 {
     public class Program
     {
-        public static IEnumerable<ViewSerializer<ICollection<Vehicle>>> CreateViewSerializer()
+        public static IEnumerable<ViewSerializer<ICollection<Vehicle>>> CreateViewSerializers()
             => new ViewSerializer<ICollection<Vehicle>>[]
             {
                 new()
@@ -62,7 +62,7 @@ namespace FifthTask
 
                 List<Vehicle> vehicles = new List<Vehicle>() { car, bus, scooter, truck };
 
-                var viewSerializers = CreateViewSerializer();
+                var viewSerializers = CreateViewSerializers();
                 foreach (var decorator in viewSerializers)
                 {
                     decorator.Execute(vehicles);
