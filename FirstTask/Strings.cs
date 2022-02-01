@@ -16,7 +16,7 @@ namespace FirstTask
         {
             if (str is null)
             {
-                throw new ArgumentNullException(str);
+                throw new ArgumentNullException(nameof(str));
             }
             int max = 0;
             for (int i = 0; i < str.Length; i++)
