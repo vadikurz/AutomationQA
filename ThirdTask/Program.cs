@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using ThirdTask.Parts;
+using ThirdTask.Vehicles;
 
 namespace ThirdTask
 {

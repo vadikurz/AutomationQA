@@ -1,6 +1,7 @@
 ﻿using System;
+using ThirdTask.Parts;
 
-namespace ThirdTask
+namespace ThirdTask.Vehicles
 {
     public class Car : Vehicle
     {
