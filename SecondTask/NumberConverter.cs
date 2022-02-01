@@ -11,7 +11,7 @@ namespace SecondTask
 
         public string Convert(int number, int toBase)
         {
-            if (toBase < LowerLimit || toBase > UpperLimit)
+            if (toBase is < LowerLimit or > UpperLimit)
             {
                 throw new ArgumentOutOfRangeException(nameof(toBase),$"The value must be between {LowerLimit} and {UpperLimit}");
             }
