@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace FourthTask
 {
@@ -54,7 +55,7 @@ namespace FourthTask
         {
             if (!IsPossibleToFly())
             {
-                throw new ArgumentException(SpeedValidationExceptionMessage);
+                throw new InvalidOperationException(SpeedValidationExceptionMessage);
             }
             double distance = CurrentPoint.GetDistance(destinationPoint);
             if (distance > MaxDistance)
