@@ -43,7 +43,7 @@ namespace FourthTask
 
             if (!IsPossibleToFly())
             {
-                throw new ArgumentException("The Bird Speed is 0 km/h");
+                throw new InvalidOperationException("The Bird Speed is 0 km/h");
             }
             CurrentPoint = destinationPoint;
         }
