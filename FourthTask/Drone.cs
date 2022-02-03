@@ -33,6 +33,11 @@ namespace FourthTask
             CurrentPoint = destinationPoint;
         }
 
+        /// <summary>
+        /// Drone hovering in the air every 10 minutes of flight for 1 minute.
+        /// </summary>
+        /// <param name="destinationPoint"></param>
+        /// <returns></returns>
         public double GetFlyTime(Point destinationPoint)
         {
             double distance = CurrentPoint.GetDistance(destinationPoint);
