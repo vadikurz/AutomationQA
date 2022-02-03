@@ -7,8 +7,8 @@ namespace FourthTask
         private const string SpeedValidationExceptionMessage = "The Bird Speed is 0 km/h";
         private const string DistanceValidationExceptionMessage = "The Bird cannot fly more than 100 kilometers";
         public const int MaxDistance = 100;
-        public const int MinSpeed = 0;
-        public const int MaxSpeed = 20;
+        public const int MinSpeed = 0; 
+        public const int MaxSpeed = 20; 
         public Point CurrentPoint { get; private set; }
 
         private int speed;
@@ -28,7 +28,7 @@ namespace FourthTask
         public Bird(Point currentPoint)
         {
             CurrentPoint = currentPoint;
-            Speed = RandomSpeed();
+            Speed = RandomSpeed(); // Random speed in range from 0 to 20 km/h
         }
         private int RandomSpeed()
         { 

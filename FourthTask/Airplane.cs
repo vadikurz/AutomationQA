@@ -5,9 +5,9 @@ namespace FourthTask
     public class Airplane : IFlyable
     {
         private const string DistanceValidationExceptionMessage = "The Airplane cannot fly more than 6000 kilometers";
-        public const int StartingSpeed = 200;
-        public const int MaxSpeed = 900;
-        public const int MaxDistance = 6000;
+        public const int StartingSpeed = 200; 
+        public const int MaxSpeed = 900; 
+        public const int MaxDistance = 6000; 
 
         public Point CurrentPoint { get; private set; }
 
@@ -25,6 +25,11 @@ namespace FourthTask
             CurrentPoint = destinationPoint;
         }
 
+        /// <summary>
+        /// The airplane increases speed by 10 km/h every 10 km of flight from the initial speed of 200 km/h.
+        /// </summary>
+        /// <param name="destinationPoint"></param>
+        /// <returns></returns>
         public double GetFlyTime(Point destinationPoint)
         {
             double distance = CurrentPoint.GetDistance(destinationPoint);
