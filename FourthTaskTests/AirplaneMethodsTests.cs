@@ -9,7 +9,7 @@ namespace FourthTaskTests
         public const double Delta = 1e-6;
         [TestMethod]
         [DataRow(0.7510423123, new[] { 15, 2, 3 }, new[] { 100, 200, 38 })]
-        public void GetFlyTimeTestPositive(double expectedTime, int[] currentPoint, int[] destinationPoint)
+        public void GetFlyTimePositiveTest(double expectedTime, int[] currentPoint, int[] destinationPoint)
         {
             var airplane = new Airplane(new Point(currentPoint[0], currentPoint[1], currentPoint[2]));
 
