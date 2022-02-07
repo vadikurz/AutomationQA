@@ -17,9 +17,6 @@ namespace FifthTask.Vehicles
 
             NumberOfSeats = numberOfSeats;
         }
-        public override string ToString()
-        {
-            return $"{NumberOfSeats}\n{Engine}\n{Transmission}\n{Chassis}\n";
-        }
+        public override string ToString() => $"{NumberOfSeats}\n{Engine}\n{Transmission}\n{Chassis}\n";
     }
 }
