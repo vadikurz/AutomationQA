@@ -7,6 +7,7 @@ namespace FifthTask.Serialization
     public class ViewSerializer<T>
     {
         public Func<T, object> View { get; init; }
+
         public string Path { get; init; }
 
         public void Execute(T data)

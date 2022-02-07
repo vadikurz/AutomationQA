@@ -10,6 +10,7 @@ namespace FifthTask.Serialization
     public class GroupSerializationModel<TKey, TElement>
     {
         public TKey Key { get; set; }
+
         public List<TElement> Elements { get; set; }
 
         private GroupSerializationModel() { }
@@ -19,6 +20,5 @@ namespace FifthTask.Serialization
             Key = group.Key;
             Elements = group.ToList();
         }
-
     }
 }
