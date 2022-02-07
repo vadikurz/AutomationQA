@@ -12,6 +12,7 @@ namespace FifthTask.Serialization
         public string SerialNumber { get; set; }
 
         private EngineSerializationModel() { }
+
         public EngineSerializationModel(int power, EngineType type, string serialNumber)
         {
             Power = power;

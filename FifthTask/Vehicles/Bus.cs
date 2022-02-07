@@ -14,6 +14,7 @@ namespace FifthTask.Vehicles
             {
                 throw new ArgumentOutOfRangeException("A bus cannot have less than 4 wheels.");
             }
+
             NumberOfSeats = numberOfSeats;
         }
         public override string ToString()

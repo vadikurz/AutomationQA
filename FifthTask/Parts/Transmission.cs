@@ -9,6 +9,7 @@
         public string Manufacturer { get; set; }
 
         private Transmission(){}
+
         public Transmission(TransmissionType type, ushort numberOfGears, string manufacturer)
         {
             Type = type;

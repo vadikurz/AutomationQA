@@ -16,6 +16,7 @@ namespace FifthTask.Vehicles
             {
                 throw new ArgumentOutOfRangeException("A car cannot have less than 4 wheels.");
             }
+
             BodyType = bodyType;
         }
 
