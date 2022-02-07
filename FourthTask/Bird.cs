@@ -73,9 +73,6 @@ namespace FourthTask
             return CurrentPoint.GetDistance(destinationPoint) / Speed;
         }
 
-        private bool IsPossibleToFly()
-        {
-            return Speed != 0;
-        }
+        private bool IsPossibleToFly() => Speed != 0;
     }
 }
