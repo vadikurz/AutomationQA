@@ -17,9 +17,9 @@ namespace SecondTask
                     }
                 }
             }
-            catch (ArgumentOutOfRangeException e)
+            catch (ArgumentOutOfRangeException exception)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(exception);
             }
         }
     }
