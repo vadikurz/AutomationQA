@@ -18,11 +18,13 @@ namespace FirstTask
             {
                 throw new ArgumentNullException(nameof(str));
             }
+
             int max = 0;
             for (int i = 0; i < str.Length; i++)
             {
                 HashSet<char> items = new HashSet<char> { str[i] };
                 int j = i + 1;
+
                 while (j < str.Length && !items.Contains(str[j]))
                 {
                     items.Add(str[j]);
@@ -34,6 +36,7 @@ namespace FirstTask
                     max = j - i;
                 }
             }
+
             return max;
         }
     }
