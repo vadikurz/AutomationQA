@@ -19,6 +19,7 @@ namespace FourthTask
             {
                 throw new ArgumentOutOfRangeException(nameof(speed), SpeedValidationExceptionMessage);
             }
+
             CurrentPoint = currentPoint;
             Speed = speed;
         }
@@ -26,10 +27,12 @@ namespace FourthTask
         public void FlyTo(Point destinationPoint)
         {
             double distance = CurrentPoint.GetDistance(destinationPoint);
+
             if (distance > MaxDistance)
             {
                 throw new ArgumentOutOfRangeException(nameof(distance), DistanceValidationExceptionMessage);
             }
+
             CurrentPoint = destinationPoint;
         }
 
@@ -41,12 +44,13 @@ namespace FourthTask
         public double GetFlyTime(Point destinationPoint)
         {
             double distance = CurrentPoint.GetDistance(destinationPoint);
+
             if (distance > MaxDistance)
             {
                 throw new ArgumentOutOfRangeException(nameof(distance), DistanceValidationExceptionMessage);
             }
+
             return (distance / Speed) + (int)((distance / Speed) / 10);
         }
-
     }
 }
