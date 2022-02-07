@@ -11,6 +11,7 @@ namespace FourthTask
         public const int MaxSpeed = 260;
 
         public Point CurrentPoint{ get; private set; }
+
         public int Speed { get; }
 
         public Drone(Point currentPoint, int speed)
