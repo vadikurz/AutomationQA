@@ -8,7 +8,7 @@
 
         public ushort PermissibleLoad { get; set; }
 
-        public Chassis(){}
+        private Chassis(){}
         public Chassis(ushort numberOfWheels, string serialNumber, ushort permissibleLoad)
         {
             NumberOfWheels = numberOfWheels;
