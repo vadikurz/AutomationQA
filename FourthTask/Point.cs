@@ -34,7 +34,9 @@ namespace FourthTask
 
         public double GetDistance(Point destination)
         {
-            return Math.Sqrt(Math.Pow(destination.X - X, 2) + Math.Pow(destination.Y - Y, 2) + Math.Pow(destination.Z - Z, 2));
+            var power = 2;
+
+            return Math.Sqrt(Math.Pow(destination.X - X, power) + Math.Pow(destination.Y - Y, power) + Math.Pow(destination.Z - Z, power));
         }
 
         public override string ToString() => $"X: {X}\nY: {Y}\nZ: {Z}\n";
