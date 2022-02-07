@@ -16,7 +16,9 @@ namespace FifthTask.Vehicles
         public Transmission Transmission { get; set; }
 
         public Chassis Chassis { get; set; }
+
         public Vehicle() {}
+
         protected Vehicle(Engine engine, Transmission transmission, Chassis chassis)
         {
             Engine = engine;

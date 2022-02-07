@@ -16,6 +16,7 @@ namespace FifthTask.Vehicles
             {
                 throw new ArgumentOutOfRangeException("The number of wheels on the scooter can be from 2 before 3");
             }
+
             MaxSpeed = maxSpeed;
         }
         public override string ToString()

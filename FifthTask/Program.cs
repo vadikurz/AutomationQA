@@ -81,6 +81,7 @@ namespace FifthTask
             {
                 var vehicles = CreateVehicles();
                 var viewSerializers = CreateViewSerializers();
+
                 foreach (var decorator in viewSerializers)
                 {
                     decorator.Execute(vehicles);
