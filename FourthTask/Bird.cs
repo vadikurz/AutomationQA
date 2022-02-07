@@ -9,6 +9,7 @@ namespace FourthTask
         public const int MaxDistance = 100;
         public const int MinSpeed = 0; 
         public const int MaxSpeed = 20; 
+
         public Point CurrentPoint { get; private set; }
 
         private int speed;
@@ -30,14 +31,18 @@ namespace FourthTask
             CurrentPoint = currentPoint;
             Speed = RandomSpeed(); // Random speed in range from 0 to 20 km/h
         }
+
         private int RandomSpeed()
         { 
             Random random = new Random();
+
             return random.Next(MinSpeed, MaxSpeed);
         }
+
         public void FlyTo(Point destinationPoint)
         {
             double distance = CurrentPoint.GetDistance(destinationPoint);
+
             if (distance > MaxDistance)
             {
                 throw new ArgumentOutOfRangeException(nameof(distance), DistanceValidationExceptionMessage);
@@ -47,6 +52,7 @@ namespace FourthTask
             {
                 throw new InvalidOperationException(SpeedValidationExceptionMessage);
             }
+
             CurrentPoint = destinationPoint;
         }
 
@@ -56,11 +62,14 @@ namespace FourthTask
             {
                 throw new InvalidOperationException(SpeedValidationExceptionMessage);
             }
+
             double distance = CurrentPoint.GetDistance(destinationPoint);
+
             if (distance > MaxDistance)
             {
                 throw new ArgumentOutOfRangeException(nameof(distance), DistanceValidationExceptionMessage);
             }
+
             return CurrentPoint.GetDistance(destinationPoint) / Speed;
         }
 
@@ -68,6 +77,5 @@ namespace FourthTask
         {
             return Speed != 0;
         }
-
     }
 }
