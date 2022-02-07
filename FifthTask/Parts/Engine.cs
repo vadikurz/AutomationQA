@@ -10,7 +10,7 @@
 
         public string SerialNumber { get; set; }
 
-        public Engine(){}
+        private Engine(){}
         public Engine(int power, double capacity, EngineType type, string serialNumber)
         {
             Power = power;
