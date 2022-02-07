@@ -19,9 +19,6 @@ namespace FifthTask.Vehicles
 
             MaxSpeed = maxSpeed;
         }
-        public override string ToString()
-        {
-            return $"{MaxSpeed}\n{Engine}\n{Transmission}\n{Chassis}\n";
-        }
+        public override string ToString() => $"{MaxSpeed}\n{Engine}\n{Transmission}\n{Chassis}\n";
     }
 }

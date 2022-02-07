@@ -20,9 +20,6 @@
             SerialNumber = serialNumber;
         }
 
-        public override string ToString()
-        {
-            return $"{Power}\n{Capacity}\n{Type}\n{SerialNumber}\n";
-        }
+        public override string ToString() => $"{Power}\n{Capacity}\n{Type}\n{SerialNumber}\n";
     }
 }
