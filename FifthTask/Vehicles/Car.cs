@@ -8,7 +8,7 @@ namespace FifthTask.Vehicles
     {
         public CarBody BodyType { get; }
 
-        public Car(){}
+        private Car(){}
 
         public Car(Engine engine, Transmission transmission, Chassis chassis, CarBody bodyType) : base(engine, transmission, chassis)
         {

@@ -7,7 +7,7 @@ namespace FifthTask.Vehicles
     public class Truck : Vehicle
     {
         public ushort LiftingCapacity { get; }
-        public Truck(){}
+        private Truck(){}
         public Truck(Engine engine, Transmission transmission, Chassis chassis, ushort liftingCapacity) : base(engine, transmission, chassis)
         {
             if (chassis.NumberOfWheels < 4)

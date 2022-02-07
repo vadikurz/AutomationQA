@@ -6,7 +6,7 @@ namespace FifthTask.Vehicles
     [Serializable]
     public class Scooter : Vehicle
     {
-        public Scooter(){}
+        private Scooter(){}
 
         public ushort MaxSpeed { get; }
 

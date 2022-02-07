@@ -12,7 +12,7 @@ namespace FifthTask.Serialization
         public TKey Key { get; set; }
         public List<TElement> Elements { get; set; }
 
-        public GroupSerializationModel() { }
+        private GroupSerializationModel() { }
 
         public GroupSerializationModel(IGrouping<TKey, TElement> group)
         {

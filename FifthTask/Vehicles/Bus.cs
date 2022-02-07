@@ -7,7 +7,7 @@ namespace FifthTask.Vehicles
     public class Bus : Vehicle
     {
         public ushort NumberOfSeats { get; set; }
-        public Bus(){}
+        private Bus(){}
         public Bus(Engine engine, Transmission transmission, Chassis chassis, ushort numberOfSeats) : base(engine, transmission, chassis)
         {
             if (chassis.NumberOfWheels < 4)
