@@ -12,6 +12,7 @@ namespace ThirdTask
             {
                 throw new ArgumentOutOfRangeException(nameof(chassis),"The number of wheels of chassis on the scooter can be from 2 before 3");
             }
+
             MaxSpeed = maxSpeed;
         }
 

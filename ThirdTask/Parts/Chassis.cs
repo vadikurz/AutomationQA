@@ -3,7 +3,9 @@
     public class Chassis
     {
         public ushort NumberOfWheels { get; }
+
         public string SerialNumber { get; }
+
         public ushort PermissibleLoad { get; }
 
         public Chassis(ushort numberOfWheels, string serialNumber, ushort permissibleLoad)

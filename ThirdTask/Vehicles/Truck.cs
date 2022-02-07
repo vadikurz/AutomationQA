@@ -12,6 +12,7 @@ namespace ThirdTask
             {
                 throw new ArgumentOutOfRangeException(nameof(chassis), "A truck cannot have less than 4 wheels of chassis.");
             }
+
             LiftingCapacity = liftingCapacity;
         }
 

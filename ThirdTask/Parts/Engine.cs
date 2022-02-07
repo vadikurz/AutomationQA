@@ -3,8 +3,11 @@
     public class Engine
     {
         public int Power { get; }
+
         public double Volume { get; }
+
         public EngineType Type { get; }
+
         public string SerialNumber { get; }
 
         public Engine(int power, double volume, EngineType type, string serialNumber)
