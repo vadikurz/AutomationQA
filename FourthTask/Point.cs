@@ -7,7 +7,9 @@ namespace FourthTask
         private const string CoordinateValidationExceptionMessage = "Coordinates cannot be negative";
 
         public int X { get; }
+
         public int Y { get; }
+
         public int Z { get; }
 
         public Point(int x, int y, int z)

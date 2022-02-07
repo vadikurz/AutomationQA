@@ -13,6 +13,7 @@ namespace FourthTask
         public Point CurrentPoint { get; private set; }
 
         private int speed;
+
         public int Speed
         {
             get => speed;
