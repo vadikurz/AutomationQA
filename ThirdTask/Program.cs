@@ -48,6 +48,7 @@ namespace ThirdTask
             try
             {
                 var vehicles = CreateVehicles();
+
                 foreach (var vehicle in vehicles)
                 {
                     Console.WriteLine(vehicle.ToString());
