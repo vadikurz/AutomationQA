@@ -7,7 +7,9 @@ namespace FifthTask.Vehicles
     public class Bus : Vehicle
     {
         public ushort NumberOfSeats { get; set; }
+
         private Bus(){}
+
         public Bus(Engine engine, Transmission transmission, Chassis chassis, ushort numberOfSeats) : base(engine, transmission, chassis)
         {
             if (chassis.NumberOfWheels < 4)
@@ -17,6 +19,7 @@ namespace FifthTask.Vehicles
 
             NumberOfSeats = numberOfSeats;
         }
+
         public override string ToString() => $"{NumberOfSeats}\n{Engine}\n{Transmission}\n{Chassis}\n";
     }
 }
