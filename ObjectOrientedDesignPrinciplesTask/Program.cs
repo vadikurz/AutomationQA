@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using ObjectOrientedDesignPrinciplesTask.Commands;
 
 namespace ObjectOrientedDesignPrinciplesTask
@@ -18,27 +19,38 @@ namespace ObjectOrientedDesignPrinciplesTask
             while (true)
             {
                 Console.WriteLine("Enter command");
-                var command = Console.ReadLine();
-                switch (command)
-                {
-                    case "count all":
-                    {
-                        carManager.SetCommand(CountAll.GetInstance(carPark));
-                        carManager.GetInfo();
-                    } 
-                        break;
-                    case "count types":
-                    {
-                        carManager.SetCommand(CountTypes.GetInstance(carPark));
-                        carManager.GetInfo();
-                    }
-                        break;
-                }
+                var commandAsArray = Console.ReadLine()?.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                var command = String.Join(" ", commandAsArray!);
 
-                if (command == "exit")
-                {
-                    break;
-                }
+                switch (command)
+                    {
+                        case "count all":
+                        {
+                            carManager.SetCommand(CountAll.GetInstance(carPark));
+                            carManager.GetInfo();
+                        }
+                            break;
+                        case "count types":
+                        {
+                            carManager.SetCommand(CountTypes.GetInstance(carPark));
+                            carManager.GetInfo();
+                        }
+                            break;
+                    }
+
+                    if(carPark.BatchesOfCars.Any(batch => command == "average price" + " " + $"{batch.Type}"))
+                    {
+                        var cars = carPark.BatchesOfCars.Where(batch => commandAsArray[2] == batch.Type).ToList();
+                        foreach (var car in cars)
+                        {
+                            Console.WriteLine(car.Type);
+                        }
+                    }
+
+                    if (command is "exit")
+                    {
+                        break;
+                    }
             }
         }
     }
