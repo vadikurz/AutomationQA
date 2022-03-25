@@ -29,16 +29,16 @@ namespace ObjectOrientedDesignPrinciplesTask
         public void AddBatchOfCars()
         {
             Console.WriteLine("Enter brand of car");
-            var type = Console.ReadLine();
+            var type = Console.ReadLine()?.Trim();
 
             Console.WriteLine("Enter model of car");
-            var model = Console.ReadLine();
+            var model = Console.ReadLine()?.Trim();
 
             Console.WriteLine("Enter the number of cars");
-            var number = Console.ReadLine();
+            var number = Console.ReadLine()?.Trim();
 
             Console.WriteLine("Enter cost of one unit");
-            var price = Console.ReadLine();
+            var price = Console.ReadLine()?.Trim();
 
             BatchesOfCars.Add(new BatchOfCars()
             {
