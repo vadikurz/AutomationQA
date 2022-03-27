@@ -5,14 +5,7 @@ namespace ObjectOrientedDesignPrinciplesTask.Commands
 {
     public class AveragePrice :  ICommand
     {
-        public CarPark CarPark { get; set; }
-
-        public AveragePrice(CarPark carPark)
-        {
-            CarPark = carPark;
-        }
-
-        public void Execute() =>
-            Console.WriteLine(CarPark.BatchesOfCars.Sum(batch => batch.Price) / CarPark.BatchesOfCars.Count);
+        public void Execute(CarPark carPark) =>
+            Console.WriteLine(carPark.BatchesOfCars.Sum(batch => batch.Price) / carPark.BatchesOfCars.Count);
     }
 }

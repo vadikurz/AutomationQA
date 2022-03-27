@@ -5,19 +5,15 @@ namespace ObjectOrientedDesignPrinciplesTask.Commands
 {
     public class AveragePriceType : ICommand
     {
-        public CarPark CarPark { get; set; }
-
         public string Type { get; set; }
-
-        public AveragePriceType(CarPark carPark, string type)
+        public AveragePriceType(string type)
         {
-            CarPark = carPark;
             Type = type;
         }
 
-        public void Execute() => 
-            Console.WriteLine(CarPark.BatchesOfCars.Where(batch => batch.Type == Type).Sum(batch => batch.Price) / 
-                              CarPark.BatchesOfCars.Count(batch => batch.Type == Type));
+        public void Execute(CarPark carPark) => 
+            Console.WriteLine(carPark.BatchesOfCars.Where(batch => batch.Type == Type).Sum(batch => batch.Price) / 
+                              carPark.BatchesOfCars.Count(batch => batch.Type == Type));
         
     }
 }

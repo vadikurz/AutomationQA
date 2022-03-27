@@ -4,16 +4,9 @@ namespace ObjectOrientedDesignPrinciplesTask.Commands
 {
     public class CountTypes : ICommand
     {
-        public CarPark CarPark { get; set; }
-
-        public CountTypes(CarPark carPark)
+        public void Execute(CarPark carPark)
         {
-            CarPark = carPark;
-        }
-
-        public void Execute()
-        {
-            Console.WriteLine(CarPark.BatchesOfCars.Count);
+            Console.WriteLine(carPark.BatchesOfCars.Count);
         }
     }
 }
