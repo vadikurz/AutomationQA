@@ -11,9 +11,9 @@ namespace ObjectOrientedDesignPrinciplesTask
             Command = command;
         }
 
-        public void GetInfo()
+        public void GetInfo(CarPark carPark)
         {
-            Command.Execute();
+            Command.Execute(carPark);
         }
     }
 }
