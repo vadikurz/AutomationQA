@@ -9,16 +9,29 @@ namespace ObjectOrientedDesignPrinciplesTask;
 
 public class Terminal
 {
+    private static readonly Lazy<Terminal> lazy = new(() => new Terminal());
+
     private bool isDeactive;
 
     private bool isCarParkFull;
 
-    private readonly CarPark carPark = new CarPark();
+    private readonly CarPark carPark;
 
-    private readonly CarManager carManager = new CarManager();
+    private readonly CarManager carManager;
+
+    private Terminal()
+    {
+        carPark = new CarPark();
+        carManager = new CarManager();
+    }
+
+    public static Terminal GetInstance()
+    {
+        return lazy.Value;
+    }
 
     private void Deactivate() => isDeactive = true;
-    
+
     public void Run()
     {
         while (!isCarParkFull)
@@ -29,7 +42,7 @@ public class Terminal
         while (!isDeactive)
         {
             var command = ReadCommand();
-            
+
             var creators = new List<ICreator>()
             {
                 new AveragePriceCreator(),
@@ -38,7 +51,7 @@ public class Terminal
                 new CountTypesCreator(),
                 new ExitCreator()
             };
-            
+
             carManager.Command = creators.Select(creator => creator.TryCreate(command))
                 .SingleOrDefault(createdCommand => createdCommand is not null, new UndefinedCommand(command))!;
             carManager.GetInfo(carPark, Deactivate);
@@ -72,7 +85,7 @@ public class Terminal
             Number = Convert.ToInt32(number),
             Price = Convert.ToDouble(price)
         });
-        
+
         Console.WriteLine("enter done if you added the cars");
 
         if (Console.ReadLine() == "done")
