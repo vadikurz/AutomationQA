@@ -39,8 +39,8 @@ public class Terminal
                 new ExitCreator()
             };
             
-            carManager.SetCommand(creators.Select(creator => creator.TryCreate(command))
-                .SingleOrDefault(createdCommand => createdCommand is not null, new UndefinedCommand(command))!);
+            carManager.Command = creators.Select(creator => creator.TryCreate(command))
+                .SingleOrDefault(createdCommand => createdCommand is not null, new UndefinedCommand(command))!;
             carManager.GetInfo(carPark, Deactivate);
         }
     }
