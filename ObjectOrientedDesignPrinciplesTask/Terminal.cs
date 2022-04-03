@@ -16,13 +16,10 @@ public class Terminal
     private bool isCarParkFull;
 
     private readonly CarPark carPark;
-
-    private readonly CarManager carManager;
-
+    
     private Terminal()
     {
         carPark = new CarPark();
-        carManager = new CarManager();
     }
 
     public static Terminal GetInstance()
@@ -52,9 +49,8 @@ public class Terminal
                 new ExitCreator()
             };
 
-            carManager.Command = creators.Select(creator => creator.TryCreate(command))
-                .SingleOrDefault(createdCommand => createdCommand is not null, new UndefinedCommand(command))!;
-            carManager.GetInfo(carPark, Deactivate);
+            creators.Select(creator => creator.TryCreate(command))
+                .SingleOrDefault(createdCommand => createdCommand is not null, new UndefinedCommand(command))!.Execute(carPark, Deactivate);
         }
     }
 
