@@ -11,7 +11,7 @@ namespace ObjectOrientedDesignPrinciplesTask.Commands
             CommandName = commandName;
         }
 
-        public void Execute(CarPark carPark)
+        public void Execute(CarPark carPark, Action deactivator)
         {
             Console.WriteLine($"Undefined command: \"{CommandName}\"");
         }

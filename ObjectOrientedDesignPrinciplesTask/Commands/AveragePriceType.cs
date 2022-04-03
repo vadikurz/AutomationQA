@@ -11,7 +11,7 @@ namespace ObjectOrientedDesignPrinciplesTask.Commands
             Type = type;
         }
 
-        public void Execute(CarPark carPark) => 
+        public void Execute(CarPark carPark, Action deactivator) => 
             Console.WriteLine(carPark.BatchesOfCars.Where(batch => batch.Type == Type).Sum(batch => batch.Price) / 
                               carPark.BatchesOfCars.Count(batch => batch.Type == Type));
         

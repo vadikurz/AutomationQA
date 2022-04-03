@@ -1,7 +1,9 @@
-﻿namespace ObjectOrientedDesignPrinciplesTask.Commands
+﻿using System;
+
+namespace ObjectOrientedDesignPrinciplesTask.Commands
 {
     public interface ICommand
     {
-        public void Execute(CarPark carPark);
+        public void Execute(CarPark carPark, Action deactivator);
     }
 }
