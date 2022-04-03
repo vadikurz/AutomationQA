@@ -1,4 +1,5 @@
-﻿using ObjectOrientedDesignPrinciplesTask.Commands;
+﻿using System;
+using ObjectOrientedDesignPrinciplesTask.Commands;
 
 namespace ObjectOrientedDesignPrinciplesTask
 {
@@ -6,14 +7,9 @@ namespace ObjectOrientedDesignPrinciplesTask
     {
         public ICommand Command { get; set; }
 
-        public void SetCommand(ICommand command)
+        public void GetInfo(CarPark carPark, Action deactivator)
         {
-            Command = command;
-        }
-
-        public void GetInfo(CarPark carPark)
-        {
-            Command.Execute(carPark);
+            Command.Execute(carPark, deactivator);
         }
     }
 }
