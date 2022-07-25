@@ -6,7 +6,7 @@ public class YandexMailMainPage
 {
     private IWebDriver webDriver;
     
-    private readonly By signInButton = By.XPath("//a[contains(@class, 'HeadBanner-Button') and contains(@href, 'auth')]");
+    private readonly By signInButton = By.XPath("//button[contains(@class, NoLoginButton)]");
 
     public YandexMailMainPage(IWebDriver webDriver)
     {
