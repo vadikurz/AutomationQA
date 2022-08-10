@@ -1,5 +1,6 @@
 using Framework.Extensions;
 using Framework.GoogleCloudPageObjects;
+using Framework.Services;
 using Framework.YopMailPageObjects;
 using NUnit.Framework;
 using OpenQA.Selenium;
@@ -16,6 +17,7 @@ namespace Framework
             var mainPage = new MainPage(webDriver);
             var pricingCalculatorPage = new PricingCalculatorPage(webDriver);
             var yopMailMainPage = new YopMailMainPage(webDriver);
+            var user = UserCreator.CreateDefaultUser();
         
             mainPage.Search(whatToFind).FindResultByTitle(whatToFind).Click();
 
@@ -35,6 +37,7 @@ namespace Framework
             webDriver.SwitchToPreviousTab();
         
             pricingCalculatorPage
+                .SetUserName(user)
                 .SetEmailAddressInput(generatedEmailAddress)
                 .ClickButtonSendEmail();
         

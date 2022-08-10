@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Framework.Models;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
@@ -26,6 +27,8 @@ namespace Framework.GoogleCloudPageObjects
         private readonly By emailEstimateButton = By.XPath("//button[@title = 'Email Estimate']");
         private readonly By emailInputInEmailForm = By.XPath("//form[@name='emailForm']//input[@type='email']");
         private readonly By sendEmailButton = By.XPath("//button[@aria-label='Send Email']");
+        private readonly By userFirstNameInput = By.XPath("//input[contains(@ng-model,'user.firstname')]");
+        private readonly By userLastNameInput = By.XPath("//input[contains(@ng-model,'user.lastname')]");
         private readonly By numberOfInstancesInput = By.XPath
         (
             xpathToFind: "//label[contains(text(),'Number of instances')]/following-sibling::input"
@@ -120,6 +123,19 @@ namespace Framework.GoogleCloudPageObjects
 
             webDriver.FindElement(emailInputInEmailForm).SendKeys(email);
 
+            webDriver.SwitchTo().DefaultContent();
+
+            return this;
+        }
+
+        public PricingCalculatorPage SetUserName(User user)
+        {
+            webDriver.SwitchTo().Frame(webDriver.FindElement(outerPricingCalculatorFrame));
+            webDriver.SwitchTo().Frame(webDriver.FindElement(insidePricingCalculatorFrame));
+            
+            webDriver.FindElement(userFirstNameInput).SendKeys(user.FirstName);
+            webDriver.FindElement(userLastNameInput).SendKeys(user.LastName);
+            
             webDriver.SwitchTo().DefaultContent();
 
             return this;
