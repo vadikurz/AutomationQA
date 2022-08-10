@@ -3,25 +3,26 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
-namespace Framework.YopMailPageObjects;
-
-public class YopMailMainPage
+namespace Framework.YopMailPageObjects
 {
-    private IWebDriver webDriver;
-
-    private readonly By emailGeneratorButton = By.XPath("//div[@id='listeliens']//a[@href = 'email-generator']");
-
-    public YopMailMainPage(IWebDriver webDriver)
+    public class YopMailMainPage
     {
-        this.webDriver = webDriver;
-    }
+        private IWebDriver webDriver;
 
-    public EmailGeneratorPage ClickButtonGenerateEmail()
-    {
-        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
+        private readonly By emailGeneratorButton = By.XPath("//div[@id='listeliens']//a[@href = 'email-generator']");
 
-        wait.Until(ExpectedConditions.ElementIsVisible(emailGeneratorButton)).Click();
+        public YopMailMainPage(IWebDriver webDriver)
+        {
+            this.webDriver = webDriver;
+        }
+
+        public EmailGeneratorPage ClickButtonGenerateEmail()
+        {
+            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
+
+            wait.Until(ExpectedConditions.ElementIsVisible(emailGeneratorButton)).Click();
         
-        return new EmailGeneratorPage(webDriver);
+            return new EmailGeneratorPage(webDriver);
+        }
     }
 }

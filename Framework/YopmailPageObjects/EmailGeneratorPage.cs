@@ -3,31 +3,32 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
-namespace Framework.YopMailPageObjects;
-
-public class EmailGeneratorPage
+namespace Framework.YopMailPageObjects
 {
-    private IWebDriver webDriver;
-
-    private readonly By generatedEmailAddress = By.XPath("//div[@id='egen']");
-    private readonly By checkMailButton = By.XPath("//span[text()='Проверить почту']//parent::button");
-
-    public EmailGeneratorPage(IWebDriver webDriver)
+    public class EmailGeneratorPage
     {
-        this.webDriver = webDriver;
-    }
+        private IWebDriver webDriver;
 
-    public string CopyGeneratedEmailAddress()
-    {
-        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
+        private readonly By generatedEmailAddress = By.XPath("//div[@id='egen']");
+        private readonly By checkMailButton = By.XPath("//span[text()='Проверить почту']//parent::button");
 
-        return wait.Until(ExpectedConditions.ElementIsVisible(generatedEmailAddress)).Text;
-    }
+        public EmailGeneratorPage(IWebDriver webDriver)
+        {
+            this.webDriver = webDriver;
+        }
 
-    public MailBoxPage ClickButtonCheckMail()
-    {
-        webDriver.FindElement(checkMailButton).Click();
+        public string CopyGeneratedEmailAddress()
+        {
+            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
 
-        return new MailBoxPage(webDriver);
+            return wait.Until(ExpectedConditions.ElementIsVisible(generatedEmailAddress)).Text;
+        }
+
+        public MailBoxPage ClickButtonCheckMail()
+        {
+            webDriver.FindElement(checkMailButton).Click();
+
+            return new MailBoxPage(webDriver);
+        }
     }
 }

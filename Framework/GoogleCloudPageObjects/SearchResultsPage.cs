@@ -4,25 +4,26 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
-namespace Framework.GoogleCloudPageObjects;
-
-public class SearchResultsPage
+namespace Framework.GoogleCloudPageObjects
 {
-    private IWebDriver webDriver;
-
-    private readonly By resultHeaderTexts = By.XPath("//a[@class ='gs-title']/b");
-    private readonly By resultsContainer = By.XPath("//div[@class = 'gsc-resultsbox-visible']");
-
-    public SearchResultsPage(IWebDriver webDriver)
+    public class SearchResultsPage
     {
-        this.webDriver = webDriver;
-    }
+        private IWebDriver webDriver;
 
-    public IWebElement FindResultByTitle(string name)
-    {
-        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
-        wait.Until(ExpectedConditions.ElementIsVisible(resultsContainer));
+        private readonly By resultHeaderTexts = By.XPath("//a[@class ='gs-title']/b");
+        private readonly By resultsContainer = By.XPath("//div[@class = 'gsc-resultsbox-visible']");
 
-        return webDriver.FindElements(resultHeaderTexts).First(b => b.Text.Contains(name));
+        public SearchResultsPage(IWebDriver webDriver)
+        {
+            this.webDriver = webDriver;
+        }
+
+        public IWebElement FindResultByTitle(string name)
+        {
+            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
+            wait.Until(ExpectedConditions.ElementIsVisible(resultsContainer));
+
+            return webDriver.FindElements(resultHeaderTexts).First(b => b.Text.Contains(name));
+        }
     }
 }
