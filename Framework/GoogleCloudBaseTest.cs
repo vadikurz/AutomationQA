@@ -1,16 +1,16 @@
 ﻿using NUnit.Framework;
-using OpenQA.Selenium.Chrome;
 
-namespace Framework;
-
-public class GoogleCloudBaseTest : BaseTest
+namespace Framework
 {
-    [SetUp]
-    protected void DoBeforeEach()
+    public class GoogleCloudBaseTest : BaseTest
     {
-        webDriver = new ChromeDriver();
-        webDriver.Manage().Cookies.DeleteAllCookies();
-        webDriver.Navigate().GoToUrl("https://cloud.google.com/");
-        webDriver.Manage().Window.Maximize();
+        [SetUp]
+        protected void DoBeforeEach()
+        {
+            webDriver = Driver.GetDriver();
+            webDriver.Manage().Cookies.DeleteAllCookies();
+            webDriver.Navigate().GoToUrl("https://cloud.google.com/");
+            webDriver.Manage().Window.Maximize();
+        }
     }
 }

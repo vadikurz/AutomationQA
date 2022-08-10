@@ -1,15 +1,16 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
 
-namespace Framework;
-
-public abstract class BaseTest
+namespace Framework
 {
-    protected IWebDriver webDriver;
-    
-    [TearDown]
-    protected void DoAfterEach()
+    public abstract class BaseTest
     {
-        webDriver.Quit();
+        protected IWebDriver webDriver;
+    
+        [TearDown]
+        protected void DoAfterEach()
+        {
+            Driver.CloseDriver();
+        }
     }
 }
