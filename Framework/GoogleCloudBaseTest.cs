@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Framework.Services;
+using NUnit.Framework;
 
 namespace Framework
 {
@@ -8,6 +9,7 @@ namespace Framework
         protected void DoBeforeEach()
         {
             webDriver = Driver.GetDriver();
+            TestConfigurationReader.TestConfiguration();
             webDriver.Manage().Cookies.DeleteAllCookies();
             webDriver.Navigate().GoToUrl("https://cloud.google.com/");
             webDriver.Manage().Window.Maximize();
