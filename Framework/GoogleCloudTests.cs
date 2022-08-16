@@ -48,5 +48,16 @@ namespace Framework
 
             Assert.AreEqual(priceOnPricingCalculatorPage,priceFromMessage);
         }
+
+        [Test]
+        [Category("smoke")]
+        public void FindPricingCalculatorPageViaSearchTest()
+        {
+            var mainPage = new MainPage(webDriver);
+            
+            mainPage.Search(whatToFind).FindResultByTitle(whatToFind).Click();
+            
+            Assert.AreEqual("https://cloud.google.com/products/calculator/?hl=sv",webDriver.Url);
+        }
     }
 }
