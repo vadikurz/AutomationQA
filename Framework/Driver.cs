@@ -1,5 +1,4 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
@@ -10,29 +9,36 @@ namespace Framework
 {
     public class Driver
     {
-        private static Lazy<IWebDriver> lazy = new Lazy<IWebDriver>(() =>
+        private static IWebDriver driver;
+
+        public static IWebDriver GetDriver()
         {
-            switch(TestContext.Parameters.Get("Browser"))
+            if (driver == null)
             {
-                case "chrome":
-                    new DriverManager().SetUpDriver(new ChromeConfig());
-                    return new ChromeDriver();
-                    break;
-                case "firefox":
-                    new DriverManager().SetUpDriver(new FirefoxConfig());
-                    return new FirefoxDriver();
-                    break;
-                default: 
-                    new DriverManager().SetUpDriver(new ChromeConfig());
-                    return new ChromeDriver();
+                switch(TestContext.Parameters.Get("Browser"))
+                {
+                    case "chrome":
+                        new DriverManager().SetUpDriver(new ChromeConfig());
+                        driver =  new ChromeDriver();
+                        break;
+                    case "firefox":
+                        new DriverManager().SetUpDriver(new FirefoxConfig());
+                        driver =  new FirefoxDriver();
+                        break;
+                    default: 
+                        new DriverManager().SetUpDriver(new FirefoxConfig());
+                        driver =  new FirefoxDriver();
+                        break;
+                }
             }
-        });
-    
-        public static IWebDriver GetDriver() => lazy.Value;
+
+            return driver;
+        }
 
         public static void CloseDriver()
         {
             GetDriver().Quit();
+            driver = null;
         }
     }
 }
