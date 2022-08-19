@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Framework.Models;
+using NLog;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
@@ -12,7 +13,8 @@ namespace Framework.GoogleCloudPageObjects
     public class PricingCalculatorPage
     {
         private IWebDriver webDriver;
-    
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         private readonly By computeEngineSection = By.XPath("//div[@class ='tab-holder compute']/parent::md-tab-item");
         private readonly By sectionsContainer = By.XPath("//md-pagination-wrapper");
         private readonly By insidePricingCalculatorFrame = By.XPath("//iframe[contains(@src, 'cloudpricingcalculator')]");
@@ -112,6 +114,8 @@ namespace Framework.GoogleCloudPageObjects
             SelectCommittedUsagePeriod();
 
             webDriver.SwitchTo().DefaultContent();
+            
+            logger.Info("Compute engine form filled");
 
             return this;
         }
@@ -262,6 +266,8 @@ namespace Framework.GoogleCloudPageObjects
             webDriver.FindElement(sendEmailButton).Click();
 
             webDriver.SwitchTo().DefaultContent();
+            
+            logger.Info("Email sent");
 
             return this;
         }

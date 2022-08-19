@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
+using NLog;
 using OpenQA.Selenium;
 
 namespace Framework.YopMailPageObjects
@@ -11,13 +12,14 @@ namespace Framework.YopMailPageObjects
     public class MailBoxPage
     {
         private IWebDriver webDriver;
-
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+        
         private readonly By messagesLocator = By.CssSelector("div.m");
         private readonly By messageHeaders = By.CssSelector("div.lms");
         private readonly By listOfMessagesFrame = By.XPath("//iframe[@id='ifinbox']");
         private readonly By messageFrame = By.XPath("//iframe[@id='ifmail']");
         private readonly By textViewButton = By.XPath("//span[text()='Text']/parent::button");
-        private readonly By messageText = By.XPath("//pre");
+        private readonly By messageTextLocator = By.XPath("//pre");
 
         public MailBoxPage(IWebDriver webDriver)
         {
@@ -35,16 +37,24 @@ namespace Framework.YopMailPageObjects
 
             webDriver.SwitchTo().Frame(webDriver.FindElement(messageFrame));
             webDriver.FindElement(textViewButton).Click();
+            
+            var messageText = webDriver.FindElement(messageTextLocator).Text;
+            
+            logger.Info("Message read");
 
-            return webDriver.FindElement(messageText).Text;
+            return messageText;
         }
 
         private IWebElement FindMessageByHeadline(string headlineOfMessage)
         {
             WaitForMessagesAppearing();
 
-            return webDriver.FindElements(messageHeaders)
+            var foundMessage = webDriver.FindElements(messageHeaders)
                 .First(messageHeader => messageHeader.Text.Contains(headlineOfMessage));
+            
+            logger.Info("Message found");
+            
+            return foundMessage;
         }
 
         public double PriceFromMessage(string textFromMessage)
@@ -52,8 +62,12 @@ namespace Framework.YopMailPageObjects
             var regex = new Regex(@"(\d[0-9]*[,]*[0-9]*[.]+[0-9]+)",RegexOptions.Compiled,TimeSpan.FromSeconds(10));
             var matches = regex.Matches(textFromMessage);
             var formatter = new NumberFormatInfo { NumberDecimalSeparator = "." };
-        
-            return double.Parse(matches.First().Value.Replace(",", ""), formatter);
+            
+            var price = double.Parse(matches.First().Value.Replace(",", ""), formatter);
+            
+            logger.Info("Price parsed from message");
+
+            return price;
         }
 
         private ReadOnlyCollection<IWebElement> WaitForMessagesAppearing()
