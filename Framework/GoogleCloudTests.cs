@@ -7,6 +7,7 @@ using OpenQA.Selenium;
 
 namespace Framework
 {
+    [Category("all")]
     public class GoogleCloudTests : GoogleCloudBaseTest
     {
         private const string whatToFind = "Google Cloud Platform Pricing Calculator";
