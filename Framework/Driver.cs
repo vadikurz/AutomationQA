@@ -26,8 +26,8 @@ namespace Framework
                         driver =  new FirefoxDriver();
                         break;
                     default: 
-                        new DriverManager().SetUpDriver(new FirefoxConfig());
-                        driver =  new FirefoxDriver();
+                        new DriverManager().SetUpDriver(new ChromeConfig());
+                        driver =  new ChromeDriver();
                         break;
                 }
             }
