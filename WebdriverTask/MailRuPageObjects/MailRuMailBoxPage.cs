@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
@@ -56,7 +58,7 @@ public class MailRuMailBoxPage
         wait.Until(ExpectedConditions.ElementIsVisible(searchInSpamAndTrashFoldersButton));
         wait.Until(ExpectedConditions.ElementIsVisible(messagesAfterFiltering));
 
-        return webDriver.FindElements(messagesAfterFiltering).First();
+        return WaitForMessageAppearing(messagesAfterFiltering);
     }
 
     public string ReadMessage(string sender)
@@ -96,4 +98,23 @@ public class MailRuMailBoxPage
         wait.Until(ExpectedConditions.ElementIsVisible(closeButtonForSuggestionToMakeDefaultBrowser)).Click();
         return this;
     }
+    
+    private IWebElement WaitForMessageAppearing(By messagesLocator)
+    {
+        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(5));
+        var message = webDriver.FindElements(messagesLocator).FirstOrDefault();
+        while (message is null || IsMessageRead(message.FindElements(By.TagName("span"))))
+        {
+            Thread.Sleep(5000);
+            webDriver.Navigate().Refresh();
+            wait.Until(ExpectedConditions.ElementIsVisible(messagesAfterFiltering));
+            message = webDriver.FindElements(messagesAfterFiltering).FirstOrDefault();
+        }
+
+        return message;
+    }
+
+    private bool IsMessageRead(ReadOnlyCollection<IWebElement> elements) =>
+        elements.Select(span => span.GetAttribute("title"))
+            .Any(title => title.Contains("непрочитанным"));
 }
