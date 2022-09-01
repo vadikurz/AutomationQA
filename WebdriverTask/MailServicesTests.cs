@@ -48,7 +48,9 @@ namespace WebdriverTask
             var mailRuMainMenuPage = new MailRuMainMenuPage(webDriver);
             var yandexMainPage = new YandexMailMainPage(webDriver);
             
-            mailRuMainMenuPage.SignIn().Login(UserCredentials.MailRuLogin, UserCredentials.Password).EnterNewEmailButton()
+            mailRuMainMenuPage.SignIn().Login(UserCredentials.MailRuLogin, UserCredentials.Password)
+                .CloseSuggestionToMakeDefaultBrowser()
+                .EnterNewEmailButton()
                 .SendEmail(UserCredentials.YandexLogin, messageFromFirstServer);
             
             webDriver.Navigate().GoToUrl("https://mail.yandex.by");

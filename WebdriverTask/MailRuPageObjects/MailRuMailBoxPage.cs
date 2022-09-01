@@ -21,6 +21,7 @@ public class MailRuMailBoxPage
     private readonly By nickNameInput = By.XPath("//input[@id = 'nickname']");
     private readonly By saveButton = By.XPath("//button[@data-test-id = 'save-button']");
     private readonly By searchInSpamAndTrashFoldersButton = By.XPath("//div[@class='list-letter-preview-action']");
+    private readonly By closeButtonForSuggestionToMakeDefaultBrowser = By.CssSelector("div.ph-project-promo-close-icon");
    
     public MailRuMailBoxPage(IWebDriver webDriver)
     {
@@ -54,7 +55,7 @@ public class MailRuMailBoxPage
         
         wait.Until(ExpectedConditions.ElementIsVisible(searchInSpamAndTrashFoldersButton));
         wait.Until(ExpectedConditions.ElementIsVisible(messagesAfterFiltering));
-        
+
         return webDriver.FindElements(messagesAfterFiltering).First();
     }
 
@@ -87,5 +88,12 @@ public class MailRuMailBoxPage
     public string GetUserNickName()
     {
         return webDriver.FindElement(nickNameInput).GetAttribute("value");
+    }
+
+    public MailRuMailBoxPage CloseSuggestionToMakeDefaultBrowser()
+    {
+        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
+        wait.Until(ExpectedConditions.ElementIsVisible(closeButtonForSuggestionToMakeDefaultBrowser)).Click();
+        return this;
     }
 }
