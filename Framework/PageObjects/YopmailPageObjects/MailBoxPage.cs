@@ -7,7 +7,7 @@ using System.Threading;
 using NLog;
 using OpenQA.Selenium;
 
-namespace Framework.YopMailPageObjects
+namespace Framework.PageObjects.YopmailPageObjects
 {
     public class MailBoxPage
     {

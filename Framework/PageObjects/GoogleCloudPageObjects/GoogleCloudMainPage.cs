@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium;
 
-
-namespace Framework.GoogleCloudPageObjects
+namespace Framework.PageObjects.GoogleCloudPageObjects
 {
     public class MainPage
     {

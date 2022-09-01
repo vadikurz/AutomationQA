@@ -1,7 +1,7 @@
 using Framework.Extensions;
-using Framework.GoogleCloudPageObjects;
+using Framework.PageObjects.GoogleCloudPageObjects;
+using Framework.PageObjects.YopmailPageObjects;
 using Framework.Services;
-using Framework.YopMailPageObjects;
 using NUnit.Framework;
 using OpenQA.Selenium;
 

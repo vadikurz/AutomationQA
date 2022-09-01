@@ -5,7 +5,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
-namespace Framework.GoogleCloudPageObjects
+namespace Framework.PageObjects.GoogleCloudPageObjects
 {
     public class SearchResultsPage
     {

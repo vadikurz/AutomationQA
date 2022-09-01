@@ -3,7 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
-namespace Framework.YopMailPageObjects
+namespace Framework.PageObjects.YopmailPageObjects
 {
     public class YopMailMainPage
     {
