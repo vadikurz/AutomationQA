@@ -2,17 +2,14 @@
 
 namespace Framework.PageObjects.GoogleCloudPageObjects
 {
-    public class MainPage
+    public class MainPage : AbstractPage
     {
-        private IWebDriver webDriver;
-    
         private readonly By searchInput = By.XPath("//input[@placeholder = 'Search']");
-    
-        public MainPage(IWebDriver webDriver)
+
+        public MainPage(IWebDriver webDriver) : base(webDriver)
         {
-            this.webDriver = webDriver;
         }
-    
+
         public SearchResultsPage Search(string whatToFind)
         {
             webDriver.FindElement(searchInput).Click();

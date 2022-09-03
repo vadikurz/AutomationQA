@@ -10,14 +10,16 @@ using SeleniumExtras.WaitHelpers;
 
 namespace Framework.PageObjects.GoogleCloudPageObjects
 {
-    public class PricingCalculatorPage
+    public class PricingCalculatorPage : AbstractPage
     {
-        private IWebDriver webDriver;
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
         private readonly By computeEngineSection = By.XPath("//div[@class ='tab-holder compute']/parent::md-tab-item");
         private readonly By sectionsContainer = By.XPath("//md-pagination-wrapper");
-        private readonly By insidePricingCalculatorFrame = By.XPath("//iframe[contains(@src, 'cloudpricingcalculator')]");
+
+        private readonly By insidePricingCalculatorFrame =
+            By.XPath("//iframe[contains(@src, 'cloudpricingcalculator')]");
+
         private readonly By outerPricingCalculatorFrame = By.XPath("//iframe[contains(@src, 'products/calculator')]");
         private readonly By seriesOfMachineInput = By.XPath("//md-select[@placeholder = 'Series']");
         private readonly By optionN1ForMachineSeries = By.XPath("//md-option[@value='n1']");
@@ -31,61 +33,71 @@ namespace Framework.PageObjects.GoogleCloudPageObjects
         private readonly By sendEmailButton = By.XPath("//button[@aria-label='Send Email']");
         private readonly By userFirstNameInput = By.XPath("//input[contains(@ng-model,'user.firstname')]");
         private readonly By userLastNameInput = By.XPath("//input[contains(@ng-model,'user.lastname')]");
+
         private readonly By numberOfInstancesInput = By.XPath
         (
             xpathToFind: "//label[contains(text(),'Number of instances')]/following-sibling::input"
         );
+
         private readonly By optionN1_Standard_8ForMachineType = By.XPath
         (
             xpathToFind: "//md-option[@value='CP-COMPUTEENGINE-VMIMAGE-N1-STANDARD-8']"
         );
+
         private readonly By addGpusCheckbox = By.XPath
         (
             xpathToFind: "//md-checkbox[@aria-label='Add GPUs' and contains(@ng-model,'computeServer')]"
         );
+
         private readonly By option1ForNumberOfGpus = By.XPath
         (
             xpathToFind: "//md-option[contains(@ng-repeat,'GpuNumbers') and @value='1']"
         );
+
         private readonly By option2x375ForLocalSsd = By.XPath
         (
             xpathToFind: "//md-option[contains(@ng-repeat,'dynamicSsd') and @value='2']"
         );
+
         private readonly By dataCenterLocationInput = By.XPath
         (
             xpathToFind: "//md-select[@placeholder ='Datacenter location' and contains(@ng-model,'computeServer')]"
         );
+
         private readonly By optionEurope_west3ForDataCenterLocation = By.XPath
         (
             xpathToFind: "//md-option[@value='europe-west3' and contains(@ng-repeat,'computeServer')]"
         );
+
         private readonly By commitedUsageInput = By.XPath
         (
             xpathToFind: "//md-select[@placeholder = 'Committed usage' and contains(@ng-change,'computeServer')]"
         );
+
         private readonly By option1YearForCommittedUsage = By.XPath
         (
             xpathToFind:
-            "//div[contains(@class, 'cpc-region-select')]//following-sibling::div[contains(@class, 'md-select-menu')]" 
+            "//div[contains(@class, 'cpc-region-select')]//following-sibling::div[contains(@class, 'md-select-menu')]"
             + "//md-option[@value='1']"
         );
+
         private readonly By addToEstimateButton = By.XPath
         (
             xpathToFind: "//button[@aria-label='Add to Estimate' and contains(@ng-disabled,'ComputeEngine')]"
         );
+
         private readonly By totalPrice = By.XPath
         (
             xpathToFind: "//div[contains(@ng-controller,'CloudCartCtrl')]//div[@class='md-list-item-text']/b"
         );
 
-        public PricingCalculatorPage(IWebDriver webDriver)
+        public PricingCalculatorPage(IWebDriver webDriver) : base(webDriver)
         {
-            this.webDriver = webDriver;
         }
 
         public PricingCalculatorPage SelectComputerEngineSection()
         {
-            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
+            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitTimeOut));
 
             webDriver.SwitchTo().Frame(webDriver.FindElement(outerPricingCalculatorFrame));
             webDriver.SwitchTo().Frame(webDriver.FindElement(insidePricingCalculatorFrame));
@@ -114,7 +126,7 @@ namespace Framework.PageObjects.GoogleCloudPageObjects
             SelectCommittedUsagePeriod();
 
             webDriver.SwitchTo().DefaultContent();
-            
+
             logger.Info("Compute engine form filled");
 
             return this;
@@ -136,10 +148,10 @@ namespace Framework.PageObjects.GoogleCloudPageObjects
         {
             webDriver.SwitchTo().Frame(webDriver.FindElement(outerPricingCalculatorFrame));
             webDriver.SwitchTo().Frame(webDriver.FindElement(insidePricingCalculatorFrame));
-            
+
             webDriver.FindElement(userFirstNameInput).SendKeys(user.FirstName);
             webDriver.FindElement(userLastNameInput).SendKeys(user.LastName);
-            
+
             webDriver.SwitchTo().DefaultContent();
 
             return this;
@@ -159,13 +171,13 @@ namespace Framework.PageObjects.GoogleCloudPageObjects
 
         private double ParsePrice(string price)
         {
-            var regex = new Regex(@"(\d[0-9]*[,]*[0-9]*[.]+[0-9]+)",RegexOptions.Compiled,TimeSpan.FromSeconds(10));
+            var regex = new Regex(@"(\d[0-9]*[,]*[0-9]*[.]+[0-9]+)", RegexOptions.Compiled, TimeSpan.FromSeconds(10));
             var matches = regex.Matches(price);
             var formatter = new NumberFormatInfo { NumberDecimalSeparator = "." };
-        
+
             return double.Parse(matches.First().Value.Replace(",", ""), formatter);
         }
-    
+
         private void SetNumberOfInstances()
         {
             webDriver.FindElement(numberOfInstancesInput).SendKeys("4");
@@ -173,7 +185,7 @@ namespace Framework.PageObjects.GoogleCloudPageObjects
 
         private void SelectSeriesOfMachine()
         {
-            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
+            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitTimeOut));
 
             webDriver.FindElement(seriesOfMachineInput).Click();
             wait.Until(ExpectedConditions.ElementIsVisible(optionN1ForMachineSeries)).Click();
@@ -181,7 +193,7 @@ namespace Framework.PageObjects.GoogleCloudPageObjects
 
         private void SelectMachineType()
         {
-            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
+            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitTimeOut));
 
             webDriver.FindElement(machineTypeInput).Click();
             wait.Until(ExpectedConditions.ElementIsVisible(optionN1_Standard_8ForMachineType)).Click();
@@ -194,7 +206,7 @@ namespace Framework.PageObjects.GoogleCloudPageObjects
 
         private void SelectGPUType()
         {
-            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
+            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitTimeOut));
 
             webDriver.FindElement(gpuTypeInput).Click();
             wait.Until(ExpectedConditions.ElementIsVisible(optionNVIDIA_TESLA_V100ForGPUType)).Click();
@@ -202,7 +214,7 @@ namespace Framework.PageObjects.GoogleCloudPageObjects
 
         private void SelectNumberOfGpUs()
         {
-            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
+            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitTimeOut));
 
             webDriver.FindElement(numberOfGpusInput).Click();
             wait.Until(ExpectedConditions.ElementIsVisible(option1ForNumberOfGpus)).Click();
@@ -210,7 +222,7 @@ namespace Framework.PageObjects.GoogleCloudPageObjects
 
         private void SelectLocalSsdConfiguration()
         {
-            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
+            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitTimeOut));
 
             webDriver.FindElement(localSsdInput).Click();
             wait.Until(ExpectedConditions.ElementIsVisible(option2x375ForLocalSsd)).Click();
@@ -218,7 +230,7 @@ namespace Framework.PageObjects.GoogleCloudPageObjects
 
         private void SelectDataCenterLocation()
         {
-            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
+            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitTimeOut));
 
             webDriver.FindElement(dataCenterLocationInput).Click();
             wait.Until(ExpectedConditions.ElementIsVisible(optionEurope_west3ForDataCenterLocation)).Click();
@@ -226,7 +238,7 @@ namespace Framework.PageObjects.GoogleCloudPageObjects
 
         private void SelectCommittedUsagePeriod()
         {
-            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
+            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitTimeOut));
 
             webDriver.FindElement(commitedUsageInput).Click();
             wait.Until(ExpectedConditions.ElementIsVisible(option1YearForCommittedUsage)).Click();
@@ -249,7 +261,7 @@ namespace Framework.PageObjects.GoogleCloudPageObjects
             webDriver.SwitchTo().Frame(webDriver.FindElement(outerPricingCalculatorFrame));
             webDriver.SwitchTo().Frame(webDriver.FindElement(insidePricingCalculatorFrame));
 
-            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
+            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitTimeOut));
 
             wait.Until(ExpectedConditions.ElementIsVisible(emailEstimateButton)).Click();
 
@@ -266,7 +278,7 @@ namespace Framework.PageObjects.GoogleCloudPageObjects
             webDriver.FindElement(sendEmailButton).Click();
 
             webDriver.SwitchTo().DefaultContent();
-            
+
             logger.Info("Email sent");
 
             return this;

@@ -5,23 +5,20 @@ using SeleniumExtras.WaitHelpers;
 
 namespace Framework.PageObjects.YopmailPageObjects
 {
-    public class YopMailMainPage
+    public class YopMailMainPage : AbstractPage
     {
-        private IWebDriver webDriver;
-
         private readonly By emailGeneratorButton = By.XPath("//div[@id='listeliens']//a[@href = 'email-generator']");
 
-        public YopMailMainPage(IWebDriver webDriver)
+        public YopMailMainPage(IWebDriver webDriver) : base(webDriver)
         {
-            this.webDriver = webDriver;
         }
 
         public EmailGeneratorPage ClickButtonGenerateEmail()
         {
-            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
+            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitTimeOut));
 
             wait.Until(ExpectedConditions.ElementIsVisible(emailGeneratorButton)).Click();
-        
+
             return new EmailGeneratorPage(webDriver);
         }
     }
