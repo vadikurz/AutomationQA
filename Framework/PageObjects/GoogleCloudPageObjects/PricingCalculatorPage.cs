@@ -16,10 +16,6 @@ namespace Framework.PageObjects.GoogleCloudPageObjects
 
         private readonly By computeEngineSection = By.XPath("//div[@class ='tab-holder compute']/parent::md-tab-item");
         private readonly By sectionsContainer = By.XPath("//md-pagination-wrapper");
-
-        private readonly By insidePricingCalculatorFrame =
-            By.XPath("//iframe[contains(@src, 'cloudpricingcalculator')]");
-
         private readonly By outerPricingCalculatorFrame = By.XPath("//iframe[contains(@src, 'products/calculator')]");
         private readonly By seriesOfMachineInput = By.XPath("//md-select[@placeholder = 'Series']");
         private readonly By optionN1ForMachineSeries = By.XPath("//md-option[@value='n1']");
@@ -33,6 +29,11 @@ namespace Framework.PageObjects.GoogleCloudPageObjects
         private readonly By sendEmailButton = By.XPath("//button[@aria-label='Send Email']");
         private readonly By userFirstNameInput = By.XPath("//input[contains(@ng-model,'user.firstname')]");
         private readonly By userLastNameInput = By.XPath("//input[contains(@ng-model,'user.lastname')]");
+
+        private readonly By insidePricingCalculatorFrame = By.XPath
+        (
+            xpathToFind: "//iframe[contains(@src, 'cloudpricingcalculator')]"
+        );
 
         private readonly By numberOfInstancesInput = By.XPath
         (
@@ -90,6 +91,8 @@ namespace Framework.PageObjects.GoogleCloudPageObjects
         (
             xpathToFind: "//div[contains(@ng-controller,'CloudCartCtrl')]//div[@class='md-list-item-text']/b"
         );
+
+        private const string NumberOfInstances = "4";
 
         public PricingCalculatorPage(IWebDriver webDriver) : base(webDriver)
         {
@@ -173,6 +176,7 @@ namespace Framework.PageObjects.GoogleCloudPageObjects
         {
             var regex = new Regex(@"(\d[0-9]*[,]*[0-9]*[.]+[0-9]+)", RegexOptions.Compiled, TimeSpan.FromSeconds(10));
             var matches = regex.Matches(price);
+            
             var formatter = new NumberFormatInfo { NumberDecimalSeparator = "." };
 
             return double.Parse(matches.First().Value.Replace(",", ""), formatter);
@@ -180,7 +184,7 @@ namespace Framework.PageObjects.GoogleCloudPageObjects
 
         private void SetNumberOfInstances()
         {
-            webDriver.FindElement(numberOfInstancesInput).SendKeys("4");
+            webDriver.FindElement(numberOfInstancesInput).SendKeys(NumberOfInstances);
         }
 
         private void SelectSeriesOfMachine()
