@@ -1,14 +1,15 @@
 ﻿using OpenQA.Selenium;
 
-namespace Framework.PageObjects;
-
-public abstract class AbstractPage
+namespace Framework.PageObjects
 {
-    protected IWebDriver webDriver;
-    protected const int WaitTimeOut = 10;
-
-    protected AbstractPage(IWebDriver webDriver)
+    public abstract class AbstractPage
     {
-        this.webDriver = webDriver;
+        protected IWebDriver webDriver;
+        protected const int WaitTimeOut = 10;
+
+        protected AbstractPage(IWebDriver webDriver)
+        {
+            this.webDriver = webDriver;
+        }
     }
 }
