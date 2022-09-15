@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System;
+using System.IO;
+using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 
 namespace Framework.Services
@@ -6,7 +8,7 @@ namespace Framework.Services
     public class TestConfigurationReader
     {
         private const string ConfigurationDirectoryPath =
-            "C:/Users/User/source/repos/EpamQAAutomation/Framework/Configurations";
+            "../../../Configurations";
 
         public static ConfigurationModel configurationModel;
 
@@ -15,18 +17,19 @@ namespace Framework.Services
             configurationModel = new ConfigurationModel();
             var builder = new ConfigurationBuilder();
 
-            switch (TestContext.Parameters.Get("env"))
-            {
-                case "dev":
-                    builder.AddJsonFile(ConfigurationDirectoryPath + "/dev_configsettings.json");
-                    break;
-                case "qa":
-                    builder.AddJsonFile(ConfigurationDirectoryPath + "/qa_configsettings.json");
-                    break;
-                default:
-                    builder.AddJsonFile(ConfigurationDirectoryPath + "/dev_configsettings.json");
-                    break;
-            }
+            var path = Path.Combine
+            (
+                Environment.CurrentDirectory, 
+                ConfigurationDirectoryPath, 
+                TestContext.Parameters.Get("env") switch
+                {
+                    "dev" => "dev_configsettings.json",
+                    "qa" => "qa_configsettings.json",
+                    _ => "dev_configsettings.json",
+                }
+            );
+            
+            builder.AddJsonFile(path);
 
             var configuration = builder.Build();
             configuration.Bind(configurationModel);
