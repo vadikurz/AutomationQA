@@ -7,12 +7,10 @@ using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
-namespace WebdriverTask.YandexMailPageObjects;
+namespace WebdriverTask.Pages.YandexMailPageObjects;
 
-public class YandexMailBoxPage
+public class YandexMailBoxPage : AbstractPage
 {
-    private IWebDriver webDriver;
-
     private readonly By messages = By.XPath("//div[@class = 'mail-MessageSnippet-Content']");
     private readonly By allMessages = By.XPath("//div[contains(@class, 'mail-MessagesList')]");
     private readonly By messageContainer = By.XPath("//div[contains(@class, 'MessageBody')]");
@@ -33,15 +31,14 @@ public class YandexMailBoxPage
 
     static volatile int clickLoadMoreMessagesButtonCount;
 
-    public YandexMailBoxPage(IWebDriver webDriver)
+    public YandexMailBoxPage(IWebDriver webDriver) : base(webDriver)
     {
-        this.webDriver = webDriver;
     }
     
     private IWebElement FindNewMessageBySenderViaSearch(string sender)
     {
         var actions = new Actions(webDriver);
-        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(5));
+        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
         
         webDriver.FindElement(searchInput).Click();
         actions.MoveToElement(webDriver.FindElement(advancedSearchButton)).Perform();
@@ -88,7 +85,7 @@ public class YandexMailBoxPage
 
     private string GetMessageText()
     {
-        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(5));
+        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
         wait.Until(ExpectedConditions.ElementIsVisible(messageContainer));
 
         return FindTagContainsMessageText();
@@ -96,7 +93,7 @@ public class YandexMailBoxPage
 
     public string ReadMessage(string sender)
     {
-        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(30));
+        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout)); //30
         wait.Until(ExpectedConditions.ElementIsVisible(allMessages));
 
         var message = FindNewMessageBySenderViaSearch(sender);
@@ -110,7 +107,7 @@ public class YandexMailBoxPage
     {
         EnterNewEmailButton();
 
-        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(5));
+        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
 
         wait.Until(ExpectedConditions.ElementIsVisible(recipientInput)).SendKeys(recipient);
 
@@ -122,20 +119,26 @@ public class YandexMailBoxPage
 
     private void EnterNewEmailButton()
     {
-        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(2));
+        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
 
         wait.Until(ExpectedConditions.ElementIsVisible(newEmailButton)).Click();
     }
     
     private IWebElement WaitForMessageAppearing(By messageLocator)
     {
-        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(5));
+        var timeoutBetweenPageRefresh = 5;
+        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
+        
         var message = webDriver.FindElements(messageLocator).FirstOrDefault();
+        
         while (message is null || !ContainsClassIsActive(message.FindElements(By.TagName("span"))))
         {
-            Thread.Sleep(5000);
+            Thread.Sleep(TimeSpan.FromSeconds(timeoutBetweenPageRefresh));
+            
             webDriver.Navigate().Refresh();
+            
             wait.Until(ExpectedConditions.ElementIsVisible(messages));
+            
             message = webDriver.FindElements(messages).FirstOrDefault();
         }
 

@@ -1,16 +1,13 @@
 ﻿using OpenQA.Selenium;
 
-namespace WebdriverTask.YandexMailPageObjects;
+namespace WebdriverTask.Pages.YandexMailPageObjects;
 
-public class YandexMailMainPage
+public class YandexMailMainPage : AbstractPage
 {
-    private IWebDriver webDriver;
-    
     private readonly By signInButton = By.XPath("//button[contains(@class, NoLoginButton)]");
 
-    public YandexMailMainPage(IWebDriver webDriver)
+    public YandexMailMainPage(IWebDriver webDriver) : base(webDriver)
     {
-        this.webDriver = webDriver;
     }
 
     public YandexAuthorizationPage SignIn()

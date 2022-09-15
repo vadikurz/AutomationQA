@@ -3,12 +3,10 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
-namespace WebdriverTask.MailRuPageObjects;
+namespace WebdriverTask.Pages.MailRuPageObjects;
 
-public class MailRuAuthorizationPage
+public class MailRuAuthorizationPage : AbstractPage
 {
-    private IWebDriver webDriver;
-
     private readonly By loginInput = By.XPath("//input[@name='username']");
     private readonly By continueButon = By.XPath("//button[@data-test-id = 'next-button']");
     private readonly By passwordInput = By.XPath("//input[@name = 'password']");
@@ -16,9 +14,8 @@ public class MailRuAuthorizationPage
     private readonly By loginFormFrame = By.XPath("//iframe[contains(@src, 'mail.ru/login')]");
     private readonly By invalidCredentialsMessageElement = By.XPath("//div[@data-test-id = 'error-footer-text']");
 
-    public MailRuAuthorizationPage(IWebDriver webDriver)
+    public MailRuAuthorizationPage(IWebDriver webDriver) : base(webDriver)
     {
-        this.webDriver = webDriver;
     }
 
     public MailRuMailBoxPage? Login(string login, string password, out LoginResult loginResult)
@@ -36,7 +33,7 @@ public class MailRuAuthorizationPage
         }
 
         loginResult = LoginResult.Success;
-        
+
         return mailBoxPage;
     }
 
@@ -47,8 +44,8 @@ public class MailRuAuthorizationPage
 
     private MailRuAuthorizationPage? EnterLogin(string login)
     {
-        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
-        
+        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
+
         webDriver.SwitchTo().Frame(webDriver.FindElement(loginFormFrame));
 
         wait.Until(ExpectedConditions.ElementIsVisible(loginInput)).SendKeys(login);
@@ -60,10 +57,10 @@ public class MailRuAuthorizationPage
 
     private MailRuMailBoxPage? EnterPassword(string password)
     {
-        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
-        
+        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
+
         wait.Until(ExpectedConditions.ElementIsVisible(passwordInput)).SendKeys(password);
-        
+
         webDriver.FindElement(submitButton).Click();
 
         return CheckPresenceInvalidCredentialsMessage() ? null : new MailRuMailBoxPage(webDriver);
@@ -71,12 +68,13 @@ public class MailRuAuthorizationPage
 
     private bool CheckPresenceInvalidCredentialsMessage()
     {
-        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(2));
-        
+        var messageWaitingTime = 2;
+        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(messageWaitingTime));
+
         try
         {
             wait.Until(ExpectedConditions.ElementIsVisible(invalidCredentialsMessageElement));
-            
+
             return true;
         }
         catch (WebDriverTimeoutException)

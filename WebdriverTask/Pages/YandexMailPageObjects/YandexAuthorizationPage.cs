@@ -3,24 +3,21 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
-namespace WebdriverTask.YandexMailPageObjects;
+namespace WebdriverTask.Pages.YandexMailPageObjects;
 
-public class YandexAuthorizationPage
+public class YandexAuthorizationPage : AbstractPage
 {
-    private IWebDriver webDriver;
-
     private readonly By loginInput = By.XPath("//input[@id = 'passp-field-login']");
     private readonly By passwordInput = By.XPath("//input[@id = 'passp-field-passwd']");
     private readonly By signInSubmitButton = By.XPath("//button[@id = 'passp:sign-in']");
     
-    public YandexAuthorizationPage(IWebDriver webDriver)
+    public YandexAuthorizationPage(IWebDriver webDriver) : base(webDriver)
     {
-        this.webDriver = webDriver;
     }
 
     public YandexMailBoxPage Login(string login, string password)
     {
-        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(5));
+        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
         
         webDriver.FindElement(loginInput).SendKeys(login);
         webDriver.FindElement(signInSubmitButton).Click();

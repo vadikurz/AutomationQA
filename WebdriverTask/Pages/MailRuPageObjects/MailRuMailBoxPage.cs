@@ -6,12 +6,10 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
-namespace WebdriverTask.MailRuPageObjects;
+namespace WebdriverTask.Pages.MailRuPageObjects;
 
-public class MailRuMailBoxPage
+public class MailRuMailBoxPage : AbstractPage
 {
-    private IWebDriver webDriver;
-
     private readonly By sideBarButton = By.XPath("//div[@data-testid = 'whiteline-account']");
     private readonly By NewEmailButton = By.XPath("//span[@class = 'compose-button__wrapper']");
     private readonly By messagesAfterFiltering = By.XPath("//div/a[contains(@href,'/search/inbox/')]");
@@ -25,21 +23,20 @@ public class MailRuMailBoxPage
     private readonly By searchInSpamAndTrashFoldersButton = By.XPath("//div[@class='list-letter-preview-action']");
     private readonly By closeButtonForSuggestionToMakeDefaultBrowser = By.CssSelector("div.ph-project-promo-close-icon");
    
-    public MailRuMailBoxPage(IWebDriver webDriver)
+    public MailRuMailBoxPage(IWebDriver webDriver) : base(webDriver)
     {
-        this.webDriver = webDriver;
     }
 
     public string GetUserLogin()
     {
-        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
+        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
 
         return wait.Until(ExpectedConditions.ElementIsVisible(sideBarButton)).Text;
     }
 
     public MailRuNewEmailPage EnterNewEmailButton()
     {
-        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
+        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
 
         wait.Until(ExpectedConditions.ElementIsVisible(NewEmailButton)).Click();
 
@@ -48,7 +45,7 @@ public class MailRuMailBoxPage
 
     private IWebElement FindNewMessageBySender(string sender)
     {
-        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(7));
+        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
         
         wait.Until(ExpectedConditions.ElementToBeClickable(searchButton)).Click();
         wait.Until(ExpectedConditions.ElementIsVisible(searchInput)).SendKeys(sender);
@@ -65,7 +62,7 @@ public class MailRuMailBoxPage
     { 
         FindNewMessageBySender(sender).Click();
         
-        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(7));
+        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
         
         var messageText = wait.Until(ExpectedConditions.ElementIsVisible(messageTextlocator)).Text;
 
@@ -74,7 +71,7 @@ public class MailRuMailBoxPage
 
     public void RenameUser(string newUserFirstName)
     {
-        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(5));
+        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
         
         webDriver.FindElement(sideBarButton).Click();
         
@@ -94,20 +91,26 @@ public class MailRuMailBoxPage
 
     public MailRuMailBoxPage CloseSuggestionToMakeDefaultBrowser()
     {
-        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
+        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
         wait.Until(ExpectedConditions.ElementIsVisible(closeButtonForSuggestionToMakeDefaultBrowser)).Click();
         return this;
     }
     
     private IWebElement WaitForMessageAppearing(By messagesLocator)
     {
-        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(5));
+        var timeBetweenPageRefresh = 5;
+        var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
+        
         var message = webDriver.FindElements(messagesLocator).FirstOrDefault();
+        
         while (message is null || IsMessageRead(message.FindElements(By.TagName("span"))))
         {
-            Thread.Sleep(5000);
+            Thread.Sleep(TimeSpan.FromSeconds(timeBetweenPageRefresh));
+            
             webDriver.Navigate().Refresh();
+            
             wait.Until(ExpectedConditions.ElementIsVisible(messagesAfterFiltering));
+            
             message = webDriver.FindElements(messagesAfterFiltering).FirstOrDefault();
         }
 

@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using WebdriverTask.MailRuPageObjects;
-using WebdriverTask.YandexMailPageObjects;
+using WebdriverTask.Pages.MailRuPageObjects;
+using WebdriverTask.Pages.YandexMailPageObjects;
 
 namespace WebdriverTask
 {
