@@ -1,0 +1,1 @@
+folder for .json configurations files
