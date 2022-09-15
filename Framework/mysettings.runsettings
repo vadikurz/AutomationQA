@@ -1,0 +1,7 @@
+﻿<RunSettings>
+    <TestRunParameters>
+        <Parameter name ="env" value="qa" />
+        <Parameter name ="Browser" value="chrome" />
+        <Where>cat==smoke</Where>
+    </TestRunParameters>
+</RunSettings>
