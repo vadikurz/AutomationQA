@@ -7,10 +7,13 @@ namespace WebdriverTask.Pages.YandexMailPageObjects;
 
 public class YandexAuthorizationPage : AbstractPage
 {
-    private readonly By loginInput = By.XPath("//input[@id = 'passp-field-login']");
-    private readonly By passwordInput = By.XPath("//input[@id = 'passp-field-passwd']");
-    private readonly By signInSubmitButton = By.XPath("//button[@id = 'passp:sign-in']");
+    private readonly By LoginInputLocator = By.XPath("//input[@id = 'passp-field-login']");
+    private readonly By PasswordInputLocator = By.XPath("//input[@id = 'passp-field-passwd']");
+    private readonly By SignInSubmitButtonLocator = By.XPath("//button[@id = 'passp:sign-in']");
     
+    public IWebElement LoginInput => webDriver.FindElement(LoginInputLocator);
+    public IWebElement SignInSubmitButton => webDriver.FindElement(SignInSubmitButtonLocator);
+
     public YandexAuthorizationPage(IWebDriver webDriver) : base(webDriver)
     {
     }
@@ -19,12 +22,12 @@ public class YandexAuthorizationPage : AbstractPage
     {
         var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
         
-        webDriver.FindElement(loginInput).SendKeys(login);
-        webDriver.FindElement(signInSubmitButton).Click();
+        LoginInput.SendKeys(login);
+        SignInSubmitButton.Click();
 
-        wait.Until(ExpectedConditions.ElementIsVisible(passwordInput)).SendKeys(password);
+        wait.Until(ExpectedConditions.ElementIsVisible(PasswordInputLocator)).SendKeys(password);
 
-        webDriver.FindElement(signInSubmitButton).Click();
+        SignInSubmitButton.Click();
 
         return new YandexMailBoxPage(webDriver);
     }

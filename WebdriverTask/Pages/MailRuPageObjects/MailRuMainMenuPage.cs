@@ -4,7 +4,9 @@ namespace WebdriverTask.Pages.MailRuPageObjects
 {
     public class MailRuMainMenuPage : AbstractPage
     {
-        private readonly By signInButton = By.XPath("//div[@id = 'mailbox']//button");
+        private readonly By SignInButtonLocator = By.XPath("//div[@id = 'mailbox']//button");
+        
+        public IWebElement SignInButton => webDriver.FindElement(SignInButtonLocator);
 
         public MailRuMainMenuPage(IWebDriver webDriver) : base(webDriver)
         {
@@ -12,7 +14,7 @@ namespace WebdriverTask.Pages.MailRuPageObjects
 
         public MailRuAuthorizationPage ClickSignInButton()
         {
-            webDriver.FindElement(signInButton).Click();
+            SignInButton.Click();
 
             return new MailRuAuthorizationPage(webDriver);
         }

@@ -10,18 +10,24 @@ namespace WebdriverTask.Pages.MailRuPageObjects;
 
 public class MailRuMailBoxPage : AbstractPage
 {
-    private readonly By sideBarButton = By.XPath("//div[@data-testid = 'whiteline-account']");
-    private readonly By NewEmailButton = By.XPath("//span[@class = 'compose-button__wrapper']");
-    private readonly By messagesAfterFiltering = By.XPath("//div/a[contains(@href,'/search/inbox/')]");
-    private readonly By searchButton = By.XPath("//div[@class = 'search-panel__right-col']");
-    private readonly By searchInput = By.XPath("//input[contains(@class,'mail-operands')]");
-    private readonly By findButton = By.XPath("//span[text() = 'Найти']");
-    private readonly By messageTextlocator = By.XPath("//div[contains(@class,'js-readmsg')]//div[@class]/div");
-    private readonly By personalDataButton = By.XPath("//div[text()='Личные данные']");
-    private readonly By nickNameInput = By.XPath("//input[@id = 'nickname']");
-    private readonly By saveButton = By.XPath("//button[@data-test-id = 'save-button']");
-    private readonly By searchInSpamAndTrashFoldersButton = By.XPath("//div[@class='list-letter-preview-action']");
-    private readonly By closeButtonForSuggestionToMakeDefaultBrowser = By.CssSelector("div.ph-project-promo-close-icon");
+    private readonly By SideBarButtonLocator = By.XPath("//div[@data-testid = 'whiteline-account']");
+    private readonly By NewEmailButtonLocator = By.XPath("//span[@class = 'compose-button__wrapper']");
+    private readonly By MessagesAfterFilteringLocator = By.XPath("//div/a[contains(@href,'/search/inbox/')]");
+    private readonly By SearchButtonLocator = By.XPath("//div[@class = 'search-panel__right-col']");
+    private readonly By SearchInputLocator = By.XPath("//input[contains(@class,'mail-operands')]");
+    private readonly By FindButtonLocator = By.XPath("//span[text() = 'Найти']");
+    private readonly By MessageTextlocator = By.XPath("//div[contains(@class,'js-readmsg')]//div[@class]/div");
+    private readonly By PersonalDataButtonLocator = By.XPath("//div[text()='Личные данные']");
+    private readonly By NickNameInputLocator = By.XPath("//input[@id = 'nickname']");
+    private readonly By SaveButtonLocator = By.XPath("//button[@data-test-id = 'save-button']");
+    private readonly By SearchInSpamAndTrashFoldersButtonLocator = By.XPath("//div[@class='list-letter-preview-action']");
+    private readonly By CloseButtonForSuggestionToMakeDefaultBrowserLocator = By.CssSelector("div.ph-project-promo-close-icon");
+    
+    public IWebElement FindButton =>webDriver.FindElement(FindButtonLocator);
+    public IWebElement SideBarButton => webDriver.FindElement(SideBarButtonLocator);
+    public IWebElement SaveButton => webDriver.FindElement(SaveButtonLocator);
+    public IWebElement NickNameInput => webDriver.FindElement(NickNameInputLocator);
+    
    
     public MailRuMailBoxPage(IWebDriver webDriver) : base(webDriver)
     {
@@ -31,14 +37,14 @@ public class MailRuMailBoxPage : AbstractPage
     {
         var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
 
-        return wait.Until(ExpectedConditions.ElementIsVisible(sideBarButton)).Text;
+        return wait.Until(ExpectedConditions.ElementIsVisible(SideBarButtonLocator)).Text;
     }
 
     public MailRuNewEmailPage EnterNewEmailButton()
     {
         var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
 
-        wait.Until(ExpectedConditions.ElementIsVisible(NewEmailButton)).Click();
+        wait.Until(ExpectedConditions.ElementIsVisible(NewEmailButtonLocator)).Click();
 
         return new MailRuNewEmailPage(webDriver);
     }
@@ -47,15 +53,15 @@ public class MailRuMailBoxPage : AbstractPage
     {
         var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
         
-        wait.Until(ExpectedConditions.ElementToBeClickable(searchButton)).Click();
-        wait.Until(ExpectedConditions.ElementIsVisible(searchInput)).SendKeys(sender);
+        wait.Until(ExpectedConditions.ElementToBeClickable(SearchButtonLocator)).Click();
+        wait.Until(ExpectedConditions.ElementIsVisible(SearchInputLocator)).SendKeys(sender);
         
-        webDriver.FindElement(findButton).Click();
+        FindButton.Click();
         
-        wait.Until(ExpectedConditions.ElementIsVisible(searchInSpamAndTrashFoldersButton));
-        wait.Until(ExpectedConditions.ElementIsVisible(messagesAfterFiltering));
+        wait.Until(ExpectedConditions.ElementIsVisible(SearchInSpamAndTrashFoldersButtonLocator));
+        wait.Until(ExpectedConditions.ElementIsVisible(MessagesAfterFilteringLocator));
 
-        return WaitForMessageAppearing(messagesAfterFiltering);
+        return WaitForMessageAppearing(MessagesAfterFilteringLocator);
     }
 
     public string ReadMessage(string sender)
@@ -64,7 +70,7 @@ public class MailRuMailBoxPage : AbstractPage
         
         var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
         
-        var messageText = wait.Until(ExpectedConditions.ElementIsVisible(messageTextlocator)).Text;
+        var messageText = wait.Until(ExpectedConditions.ElementIsVisible(MessageTextlocator)).Text;
 
         return messageText;
     }
@@ -73,26 +79,28 @@ public class MailRuMailBoxPage : AbstractPage
     {
         var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
         
-        webDriver.FindElement(sideBarButton).Click();
+        SideBarButton.Click();
         
-        wait.Until(ExpectedConditions.ElementIsVisible(personalDataButton)).Click();
+        wait.Until(ExpectedConditions.ElementIsVisible(PersonalDataButtonLocator)).Click();
 
-        var input = wait.Until(ExpectedConditions.ElementIsVisible(nickNameInput));
+        var input = wait.Until(ExpectedConditions.ElementIsVisible(NickNameInputLocator));
         input.Clear();
         input.SendKeys(newUserFirstName);
         
-        webDriver.FindElement(saveButton).Click();
+        SaveButton.Click();
     }
 
-    public string GetUserNickName()
+    public string GetUserNickName() // убрать
     {
-        return webDriver.FindElement(nickNameInput).GetAttribute("value");
+        return NickNameInput.GetAttribute("value");
     }
 
     public MailRuMailBoxPage CloseSuggestionToMakeDefaultBrowser()
     {
         var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
-        wait.Until(ExpectedConditions.ElementIsVisible(closeButtonForSuggestionToMakeDefaultBrowser)).Click();
+        
+        wait.Until(ExpectedConditions.ElementIsVisible(CloseButtonForSuggestionToMakeDefaultBrowserLocator)).Click();
+        
         return this;
     }
     
@@ -109,9 +117,9 @@ public class MailRuMailBoxPage : AbstractPage
             
             webDriver.Navigate().Refresh();
             
-            wait.Until(ExpectedConditions.ElementIsVisible(messagesAfterFiltering));
+            wait.Until(ExpectedConditions.ElementIsVisible(MessagesAfterFilteringLocator));
             
-            message = webDriver.FindElements(messagesAfterFiltering).FirstOrDefault();
+            message = webDriver.FindElements(messagesLocator).FirstOrDefault();
         }
 
         return message;

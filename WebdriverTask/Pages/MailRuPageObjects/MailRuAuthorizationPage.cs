@@ -7,12 +7,16 @@ namespace WebdriverTask.Pages.MailRuPageObjects;
 
 public class MailRuAuthorizationPage : AbstractPage
 {
-    private readonly By loginInput = By.XPath("//input[@name='username']");
-    private readonly By continueButon = By.XPath("//button[@data-test-id = 'next-button']");
-    private readonly By passwordInput = By.XPath("//input[@name = 'password']");
-    private readonly By submitButton = By.XPath("//button[@data-test-id = 'submit-button']");
-    private readonly By loginFormFrame = By.XPath("//iframe[contains(@src, 'mail.ru/login')]");
-    private readonly By invalidCredentialsMessageElement = By.XPath("//div[@data-test-id = 'error-footer-text']");
+    private readonly By LoginInputLocator = By.XPath("//input[@name='username']");
+    private readonly By ContinueButtonLocator = By.XPath("//button[@data-test-id = 'next-button']");
+    private readonly By PasswordInputLocator = By.XPath("//input[@name = 'password']");
+    private readonly By SubmitButtonLocator = By.XPath("//button[@data-test-id = 'submit-button']");
+    private readonly By LoginFormFrameLocator = By.XPath("//iframe[contains(@src, 'mail.ru/login')]");
+    private readonly By InvalidCredentialsMessageElementLocator = By.XPath("//div[@data-test-id = 'error-footer-text']");
+    
+    public IWebElement LoginFormFrame => webDriver.FindElement(LoginFormFrameLocator);
+    public IWebElement ContinueButton => webDriver.FindElement(ContinueButtonLocator);
+    public IWebElement SubmitButton => webDriver.FindElement(SubmitButtonLocator);
 
     public MailRuAuthorizationPage(IWebDriver webDriver) : base(webDriver)
     {
@@ -46,11 +50,11 @@ public class MailRuAuthorizationPage : AbstractPage
     {
         var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
 
-        webDriver.SwitchTo().Frame(webDriver.FindElement(loginFormFrame));
+        webDriver.SwitchTo().Frame(LoginFormFrame);
 
-        wait.Until(ExpectedConditions.ElementIsVisible(loginInput)).SendKeys(login);
+        wait.Until(ExpectedConditions.ElementIsVisible(LoginInputLocator)).SendKeys(login);
 
-        webDriver.FindElement(continueButon).Click();
+        ContinueButton.Click();
 
         return CheckPresenceInvalidCredentialsMessage() ? null : this;
     }
@@ -59,9 +63,9 @@ public class MailRuAuthorizationPage : AbstractPage
     {
         var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
 
-        wait.Until(ExpectedConditions.ElementIsVisible(passwordInput)).SendKeys(password);
+        wait.Until(ExpectedConditions.ElementIsVisible(PasswordInputLocator)).SendKeys(password);
 
-        webDriver.FindElement(submitButton).Click();
+        SubmitButton.Click();
 
         return CheckPresenceInvalidCredentialsMessage() ? null : new MailRuMailBoxPage(webDriver);
     }
@@ -73,7 +77,7 @@ public class MailRuAuthorizationPage : AbstractPage
 
         try
         {
-            wait.Until(ExpectedConditions.ElementIsVisible(invalidCredentialsMessageElement));
+            wait.Until(ExpectedConditions.ElementIsVisible(InvalidCredentialsMessageElementLocator));
 
             return true;
         }

@@ -7,10 +7,13 @@ namespace WebdriverTask.Pages.MailRuPageObjects;
 
 public class MailRuNewEmailPage : AbstractPage
 {
-    private readonly By textInput = By.XPath("//div[contains(@class, 'editable-container')]//br");
-    private readonly By recipientInput = By.XPath("//div[contains(@class, 'contactsContainer')]//input");
-    private readonly By sendButton = By.XPath("//button[@data-test-id = 'send']");
-    private readonly By closeUndoWindowButton = By.XPath("//span[@title = 'Закрыть']");
+    private readonly By TextInputLocator = By.XPath("//div[contains(@class, 'editable-container')]//br");
+    private readonly By RecipientInputLocator = By.XPath("//div[contains(@class, 'contactsContainer')]//input");
+    private readonly By SendButtonLocator = By.XPath("//button[@data-test-id = 'send']");
+    private readonly By CloseUndoWindowButtonLocator = By.XPath("//span[@title = 'Закрыть']");
+    
+    public IWebElement TextInput => webDriver.FindElement(TextInputLocator);
+    public IWebElement SendButton => webDriver.FindElement(SendButtonLocator);
 
     public MailRuNewEmailPage(IWebDriver webDriver) : base(webDriver)
     {
@@ -20,10 +23,10 @@ public class MailRuNewEmailPage : AbstractPage
     {
         var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
 
-        wait.Until(ExpectedConditions.ElementIsVisible(recipientInput)).SendKeys(recipient);
+        wait.Until(ExpectedConditions.ElementIsVisible(RecipientInputLocator)).SendKeys(recipient);
         
-        webDriver.FindElement(textInput).SendKeys(text);
-        webDriver.FindElement(sendButton).Click();
+        TextInput.SendKeys(text);
+        SendButton.Click();
         
         CloseUndoSendWindow();
 
@@ -34,6 +37,6 @@ public class MailRuNewEmailPage : AbstractPage
     {
         var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
 
-        wait.Until(ExpectedConditions.ElementIsVisible(closeUndoWindowButton)).Click();
+        wait.Until(ExpectedConditions.ElementIsVisible(CloseUndoWindowButtonLocator)).Click();
     }
 }

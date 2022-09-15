@@ -4,15 +4,16 @@ namespace WebdriverTask.Pages.YandexMailPageObjects;
 
 public class YandexMailMainPage : AbstractPage
 {
-    private readonly By signInButton = By.XPath("//button[contains(@class, NoLoginButton)]");
+    private readonly By SignInButtonLocator = By.XPath("//button[contains(@class, NoLoginButton)]");
 
+    public IWebElement SignInButton =>  webDriver.FindElement(SignInButtonLocator);
     public YandexMailMainPage(IWebDriver webDriver) : base(webDriver)
     {
     }
 
     public YandexAuthorizationPage ClickSignInButton()
     {
-        webDriver.FindElement(signInButton).Click();
+        SignInButton.Click();
 
         return new YandexAuthorizationPage(webDriver);
     }
