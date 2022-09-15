@@ -15,8 +15,8 @@ namespace WebdriverTask
             var mainMenuPage = new MailRuMainMenuPage(webDriver);
 
             var actualLogin = mainMenuPage
-                .SignIn()
-                .Login(UserCredentials.MailRuLogin, UserCredentials.Password, out LoginResult result)?.GetUserLogin();
+                .ClickSignInButton()
+                .SignIn(UserCredentials.MailRuLogin, UserCredentials.Password, out LoginResult result)?.GetUserLogin();
 
             Assert.AreEqual(UserCredentials.MailRuLogin, actualLogin);
         }
@@ -27,7 +27,7 @@ namespace WebdriverTask
         [TestCase(" ")]
         public void SignInInvalidLoginNegativeTest(string login)
         {
-            new MailRuMainMenuPage(webDriver).SignIn().Login(login, UserCredentials.Password, out LoginResult loginResult);
+            new MailRuMainMenuPage(webDriver).ClickSignInButton().SignIn(login, UserCredentials.Password, out LoginResult loginResult);
             
             Assert.AreEqual(LoginResult.InvalidLogin, loginResult);
         }
@@ -37,7 +37,7 @@ namespace WebdriverTask
         [TestCase(" ")]
         public void SignInInvalidPasswordNegativeTest(string password)
         {
-            new MailRuMainMenuPage(webDriver).SignIn().Login(UserCredentials.MailRuLogin, password, out LoginResult loginResult);
+            new MailRuMainMenuPage(webDriver).ClickSignInButton().SignIn(UserCredentials.MailRuLogin, password, out LoginResult loginResult);
             
             Assert.AreEqual(LoginResult.InvalidPassword, loginResult);
         }
@@ -49,7 +49,7 @@ namespace WebdriverTask
             var mailRuMainMenuPage = new MailRuMainMenuPage(webDriver);
             var yandexMainPage = new YandexMailMainPage(webDriver);
             
-            mailRuMainMenuPage.SignIn().Login(UserCredentials.MailRuLogin, UserCredentials.Password)?
+            mailRuMainMenuPage.ClickSignInButton().SignIn(UserCredentials.MailRuLogin, UserCredentials.Password)?
                 .CloseSuggestionToMakeDefaultBrowser()
                 .EnterNewEmailButton()
                 .SendEmail(UserCredentials.YandexLogin, messageFromFirstServer);
@@ -57,7 +57,7 @@ namespace WebdriverTask
             webDriver.Navigate().GoToUrl("https://mail.yandex.by");
             
             var yandexMailBoxPage =
-                yandexMainPage.SignIn().Login(UserCredentials.YandexLogin, UserCredentials.Password);
+                yandexMainPage.ClickSignInButton().SignIn(UserCredentials.YandexLogin, UserCredentials.Password);
             
             var actualMessage = yandexMailBoxPage.ReadMessage(UserCredentials.MailRuLogin);
             yandexMailBoxPage.SendEmail(UserCredentials.MailRuLogin,messageFromSecondServer);
@@ -71,7 +71,7 @@ namespace WebdriverTask
             var mailRuMainMenuPage = new MailRuMainMenuPage(webDriver);
             var mailRuMailBoxPage = new MailRuMailBoxPage(webDriver);
 
-            var messageText = mailRuMainMenuPage.SignIn().Login(UserCredentials.MailRuLogin, UserCredentials.Password)?
+            var messageText = mailRuMainMenuPage.ClickSignInButton().SignIn(UserCredentials.MailRuLogin, UserCredentials.Password)?
                 .ReadMessage(UserCredentials.YandexLogin);
             mailRuMailBoxPage.RenameUser(messageText);
             

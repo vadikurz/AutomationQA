@@ -15,7 +15,7 @@ public class YandexAuthorizationPage : AbstractPage
     {
     }
 
-    public YandexMailBoxPage Login(string login, string password)
+    public YandexMailBoxPage SignIn(string login, string password)
     {
         var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitingTimeout));
         

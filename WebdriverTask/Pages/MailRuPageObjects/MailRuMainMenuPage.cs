@@ -10,7 +10,7 @@ namespace WebdriverTask.Pages.MailRuPageObjects
         {
         }
 
-        public MailRuAuthorizationPage SignIn()
+        public MailRuAuthorizationPage ClickSignInButton()
         {
             webDriver.FindElement(signInButton).Click();
 

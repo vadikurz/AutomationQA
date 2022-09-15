@@ -10,7 +10,7 @@ public class YandexMailMainPage : AbstractPage
     {
     }
 
-    public YandexAuthorizationPage SignIn()
+    public YandexAuthorizationPage ClickSignInButton()
     {
         webDriver.FindElement(signInButton).Click();
 

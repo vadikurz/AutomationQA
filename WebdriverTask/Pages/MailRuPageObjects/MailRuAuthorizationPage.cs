@@ -18,7 +18,7 @@ public class MailRuAuthorizationPage : AbstractPage
     {
     }
 
-    public MailRuMailBoxPage? Login(string login, string password, out LoginResult loginResult)
+    public MailRuMailBoxPage? SignIn(string login, string password, out LoginResult loginResult)
     {
         if (EnterLogin(login) is not { })
         {
@@ -37,9 +37,9 @@ public class MailRuAuthorizationPage : AbstractPage
         return mailBoxPage;
     }
 
-    public MailRuMailBoxPage? Login(string login, string password)
+    public MailRuMailBoxPage? SignIn(string login, string password)
     {
-        return Login(login, password, out LoginResult result);
+        return SignIn(login, password, out LoginResult result);
     }
 
     private MailRuAuthorizationPage? EnterLogin(string login)
