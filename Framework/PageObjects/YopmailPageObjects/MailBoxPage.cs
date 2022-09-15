@@ -14,12 +14,20 @@ namespace Framework.PageObjects.YopmailPageObjects
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        private readonly By messagesLocator = By.CssSelector("div.m");
-        private readonly By messageHeaders = By.CssSelector("div.lms");
-        private readonly By listOfMessagesFrame = By.XPath("//iframe[@id='ifinbox']");
-        private readonly By messageFrame = By.XPath("//iframe[@id='ifmail']");
-        private readonly By textViewButton = By.XPath("//span[text()='Text']/parent::button");
-        private readonly By messageTextLocator = By.XPath("//pre");
+        private readonly By MessagesLocator = By.CssSelector("div.m");
+        private readonly By MessageHeadersLocator = By.CssSelector("div.lms");
+        private readonly By ListOfMessagesFrameLocator = By.XPath("//iframe[@id='ifinbox']");
+        private readonly By MessageFrameLocator = By.XPath("//iframe[@id='ifmail']");
+        private readonly By TextViewButtonLocator = By.XPath("//span[text()='Text']/parent::button");
+        private readonly By MessageTextLocator = By.XPath("//pre");
+
+        public IWebElement ListOfMessagesFrame => webDriver.FindElement(ListOfMessagesFrameLocator);
+        public IWebElement MessageFrame => webDriver.FindElement(MessageFrameLocator);
+        public IWebElement TextViewButton => webDriver.FindElement(TextViewButtonLocator);
+        public IWebElement MessageText => webDriver.FindElement(MessageTextLocator);
+        public ReadOnlyCollection<IWebElement> MessageHeaders => webDriver.FindElements(MessageHeadersLocator);
+        public ReadOnlyCollection<IWebElement> Messages => webDriver.FindElements(MessagesLocator);
+        
 
         public MailBoxPage(IWebDriver webDriver) : base(webDriver)
         {
@@ -27,17 +35,17 @@ namespace Framework.PageObjects.YopmailPageObjects
 
         public string ReadMessage(string headlineOfMessage)
         {
-            webDriver.SwitchTo().Frame(webDriver.FindElement(listOfMessagesFrame));
+            webDriver.SwitchTo().Frame(ListOfMessagesFrame);
 
             var message = FindMessageByHeadline(headlineOfMessage);
             message.Click();
 
             webDriver.SwitchTo().DefaultContent();
 
-            webDriver.SwitchTo().Frame(webDriver.FindElement(messageFrame));
-            webDriver.FindElement(textViewButton).Click();
+            webDriver.SwitchTo().Frame(MessageFrame);
+            TextViewButton.Click();
 
-            var messageText = webDriver.FindElement(messageTextLocator).Text;
+            var messageText = MessageText.Text;
 
             logger.Info("Message read");
 
@@ -48,7 +56,7 @@ namespace Framework.PageObjects.YopmailPageObjects
         {
             WaitForMessagesAppearing();
 
-            var foundMessage = webDriver.FindElements(messageHeaders)
+            var foundMessage = MessageHeaders
                 .First(messageHeader => messageHeader.Text.Contains(headlineOfMessage));
 
             logger.Info("Message found");
@@ -71,14 +79,18 @@ namespace Framework.PageObjects.YopmailPageObjects
 
         private ReadOnlyCollection<IWebElement> WaitForMessagesAppearing()
         {
-            var messages = webDriver.FindElements(messagesLocator);
+            var timeBetweenRefreshPage = 5;
+            var messages = Messages;
 
             while (messages.Count == 0)
             {
-                Thread.Sleep(5000);
+                Thread.Sleep(TimeSpan.FromSeconds(timeBetweenRefreshPage));
+                
                 webDriver.Navigate().Refresh();
-                webDriver.SwitchTo().Frame(webDriver.FindElement(listOfMessagesFrame));
-                messages = webDriver.FindElements(messagesLocator);
+                
+                webDriver.SwitchTo().Frame(ListOfMessagesFrame);
+                
+                messages = Messages;
             }
 
             return messages;

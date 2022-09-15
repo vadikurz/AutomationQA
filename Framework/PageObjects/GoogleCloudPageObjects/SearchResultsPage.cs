@@ -11,8 +11,8 @@ namespace Framework.PageObjects.GoogleCloudPageObjects
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        private readonly By resultHeaderTexts = By.XPath("//a[@class ='gs-title']/b");
-        private readonly By resultsContainer = By.XPath("//div[@class = 'gsc-resultsbox-visible']");
+        private readonly By ResultHeaderTextsLocator = By.XPath("//a[@class ='gs-title']/b");
+        private readonly By ResultsContainerLocator = By.XPath("//div[@class = 'gsc-resultsbox-visible']");
 
         public SearchResultsPage(IWebDriver webDriver) : base(webDriver)
         {
@@ -21,9 +21,9 @@ namespace Framework.PageObjects.GoogleCloudPageObjects
         public IWebElement FindResultByTitle(string name)
         {
             var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitTimeOut));
-            wait.Until(ExpectedConditions.ElementIsVisible(resultsContainer));
+            wait.Until(ExpectedConditions.ElementIsVisible(ResultsContainerLocator));
 
-            var result = webDriver.FindElements(resultHeaderTexts).First(b => b.Text.Contains(name));
+            var result = webDriver.FindElements(ResultHeaderTextsLocator).First(b => b.Text.Contains(name));
 
             logger.Info("Result found");
 

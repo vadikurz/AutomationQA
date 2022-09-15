@@ -4,7 +4,8 @@ namespace Framework.PageObjects.GoogleCloudPageObjects
 {
     public class MainPage : AbstractPage
     {
-        private readonly By searchInput = By.XPath("//input[@placeholder = 'Search']");
+        private readonly By SearchInputLocator = By.XPath("//input[@placeholder = 'Search']");
+        public IWebElement SearchInput => webDriver.FindElement(SearchInputLocator);
 
         public MainPage(IWebDriver webDriver) : base(webDriver)
         {
@@ -12,9 +13,9 @@ namespace Framework.PageObjects.GoogleCloudPageObjects
 
         public SearchResultsPage Search(string whatToFind)
         {
-            webDriver.FindElement(searchInput).Click();
-            webDriver.FindElement(searchInput).SendKeys(whatToFind);
-            webDriver.FindElement(searchInput).SendKeys(Keys.Enter);
+            SearchInput.Click();
+            SearchInput.SendKeys(whatToFind);
+            SearchInput.SendKeys(Keys.Enter);
 
             return new SearchResultsPage(webDriver);
         }

@@ -10,8 +10,10 @@ namespace Framework.PageObjects.YopmailPageObjects
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        private readonly By generatedEmailAddressLocator = By.XPath("//div[@id='egen']");
-        private readonly By checkMailButton = By.XPath("//span[text()='Проверить почту']//parent::button");
+        private readonly By GeneratedEmailAddressLocator = By.XPath("//div[@id='egen']");
+        private readonly By CheckMailButtonLocator = By.XPath("//span[text()='Проверить почту']//parent::button");
+
+        public IWebElement CheckMailButton => webDriver.FindElement(CheckMailButtonLocator);
 
         public EmailGeneratorPage(IWebDriver webDriver) : base(webDriver)
         {
@@ -20,9 +22,9 @@ namespace Framework.PageObjects.YopmailPageObjects
         public string CopyGeneratedEmailAddress()
         {
             var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(WaitTimeOut));
-
+            
             var generatedEmailAddress =
-                wait.Until(ExpectedConditions.ElementIsVisible(generatedEmailAddressLocator)).Text;
+                wait.Until(ExpectedConditions.ElementIsVisible(GeneratedEmailAddressLocator)).Text;
 
             logger.Info("Email address copied");
 
@@ -31,7 +33,7 @@ namespace Framework.PageObjects.YopmailPageObjects
 
         public MailBoxPage ClickButtonCheckMail()
         {
-            webDriver.FindElement(checkMailButton).Click();
+            CheckMailButton.Click();
 
             return new MailBoxPage(webDriver);
         }
