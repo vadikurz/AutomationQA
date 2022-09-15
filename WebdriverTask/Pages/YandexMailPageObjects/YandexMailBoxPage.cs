@@ -26,10 +26,6 @@ public class YandexMailBoxPage : AbstractPage
     private readonly By fromWhomButton = By.XPath("//span[text() = 'От кого']//ancestor::button");
     private readonly By fromWhomInput = By.XPath("//span[contains(@class,'input_theme_websearch')]/input");
     private readonly By searchInfo = By.XPath("//span[@class = 'mail-MessagesSearchInfo-Title']");
-    
-    private const int MessageBatchSize = 30;
-
-    static volatile int clickLoadMoreMessagesButtonCount;
 
     public YandexMailBoxPage(IWebDriver webDriver) : base(webDriver)
     {
@@ -52,35 +48,6 @@ public class YandexMailBoxPage : AbstractPage
         wait.Until(ExpectedConditions.ElementIsVisible(searchInfo));
         
         return WaitForMessageAppearing(messages);
-    }
-
-    private IWebElement? FindNewMessagesInBatchBySender(string sender)
-    {
-        return webDriver
-            .FindElements(messages)
-            .Skip(MessageBatchSize * clickLoadMoreMessagesButtonCount)
-            .FirstOrDefault(message => ContainsTitleWithSender(message.FindElements(By.TagName("span")), sender) &&
-                              ContainsClassIsActive(message.FindElements(By.TagName("span"))));
-    }
-    
-    private IWebElement FindNewMessageBySender(string sender)
-    {
-        var foundMessage = FindNewMessagesInBatchBySender(sender);
-
-        while (foundMessage is null)
-        {
-            ClickLoadMoreMessagesButton();
-            Thread.Sleep(2000);
-            foundMessage = FindNewMessagesInBatchBySender(sender);
-        }
-
-        return foundMessage;
-    }
-
-    private void ClickLoadMoreMessagesButton()
-    {
-        Interlocked.Increment(ref clickLoadMoreMessagesButtonCount);
-        webDriver.FindElement(loadMoreMessagesButton).Click();
     }
 
     private string GetMessageText()
@@ -145,10 +112,6 @@ public class YandexMailBoxPage : AbstractPage
         return message;
     }
 
-    private bool ContainsTitleWithSender(ReadOnlyCollection<IWebElement> elements, string sender) =>
-        elements.Select(span => span.GetAttribute("title"))
-            .Any(title => title.Contains(sender));
-
     private bool ContainsClassIsActive(ReadOnlyCollection<IWebElement> elements) =>
         elements.Select(span => span.GetAttribute("class"))
             .Any(@class => @class.Contains("is-active"));
@@ -161,8 +124,7 @@ public class YandexMailBoxPage : AbstractPage
 
     private string FindTagContainsMessageText()
     {
-        var div = GetDivWithoutEmptyString(webDriver
-            .FindElement(messageContainer));
+        var div = GetDivWithoutEmptyString(webDriver.FindElement(messageContainer));
         
         return div.Text == String.Empty ? div.FindElement(By.TagName("span")).Text : div.Text;
     }
