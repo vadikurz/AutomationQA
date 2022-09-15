@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Framework.Services;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
@@ -26,10 +27,12 @@ namespace Framework
             if (TestContext.CurrentContext.Result.Outcome != ResultState.Success)
             {
                 var screenshot = ((ITakesScreenshot)webDriver).GetScreenshot();
+                if (!Directory.Exists(".//screenshots/"))
+                {
+                    Directory.CreateDirectory(".//screenshots/");
+                }
                 
                 screenshot.SaveAsFile(".//screenshots/" + $"{DateTime.Now:dd-MM-yyyy_HH-mm-ss.fffff}.jpg",ScreenshotImageFormat.Jpeg);
-                screenshot.SaveAsFile("C:/ProgramData/Jenkins/.jenkins/workspace/Framework/screenshots/" +
-                                      $"{DateTime.Now:dd-MM-yyyy_HH-mm-ss.fffff}.jpg",ScreenshotImageFormat.Jpeg);
             }
 
             Driver.CloseDriver();
