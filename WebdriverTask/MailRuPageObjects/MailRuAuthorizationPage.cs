@@ -2,7 +2,6 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-using WebdriverTask.Exceptions;
 
 namespace WebdriverTask.MailRuPageObjects;
 
@@ -22,12 +21,31 @@ public class MailRuAuthorizationPage
         this.webDriver = webDriver;
     }
 
-    public MailRuMailBoxPage Login(string login, string password)
+    public MailRuMailBoxPage? Login(string login, string password, out LoginResult loginResult)
     {
-        return EnterLogin(login).EnterPassword(password);
+        if (EnterLogin(login) is not { })
+        {
+            loginResult = LoginResult.InvalidLogin;
+            return null;
+        }
+
+        if (EnterPassword(password) is not { } mailBoxPage)
+        {
+            loginResult = LoginResult.InvalidPassword;
+            return null;
+        }
+
+        loginResult = LoginResult.Success;
+        
+        return mailBoxPage;
     }
 
-    private MailRuAuthorizationPage EnterLogin(string login)
+    public MailRuMailBoxPage? Login(string login, string password)
+    {
+        return Login(login, password, out LoginResult result);
+    }
+
+    private MailRuAuthorizationPage? EnterLogin(string login)
     {
         var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
         
@@ -37,15 +55,10 @@ public class MailRuAuthorizationPage
 
         webDriver.FindElement(continueButon).Click();
 
-        if (CheckPresenceInvalidCredentialsMessage())
-        {
-            throw new InvalidUserLoginException("Invalid login");
-        }
-
-        return this;
+        return CheckPresenceInvalidCredentialsMessage() ? null : this;
     }
 
-    private MailRuMailBoxPage EnterPassword(string password)
+    private MailRuMailBoxPage? EnterPassword(string password)
     {
         var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(10));
         
@@ -53,12 +66,7 @@ public class MailRuAuthorizationPage
         
         webDriver.FindElement(submitButton).Click();
 
-        if (CheckPresenceInvalidCredentialsMessage())
-        {
-            throw new InvalidUserPasswordException("Invalid password");
-        }
-
-        return new MailRuMailBoxPage(webDriver);
+        return CheckPresenceInvalidCredentialsMessage() ? null : new MailRuMailBoxPage(webDriver);
     }
 
     private bool CheckPresenceInvalidCredentialsMessage()
